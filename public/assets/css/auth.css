@@ -1,0 +1,89 @@
+/* ==========================================
+   FoodShare — Auth pages (login / signup / forgot / reset)
+   Depends on tokens.css + components.css being loaded first.
+   ========================================== */
+
+/* ---------- Entrance animation for the auth card ---------- */
+@keyframes auth-card-in {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.form-shell { animation: auth-card-in 0.45s var(--ease) both; }
+
+/* ---------- Password field with show/hide toggle ---------- */
+.password-field { position: relative; }
+.password-field .input { padding-right: 2.8rem; }
+.password-toggle-btn {
+  position: absolute; top: 50%; right: 0.4rem; transform: translateY(-50%);
+  width: 2.1rem; height: 2.1rem; display: flex; align-items: center; justify-content: center;
+  background: none; border: none; border-radius: var(--radius-sm); cursor: pointer;
+  color: var(--text-muted); transition: color var(--fast) var(--ease), background var(--fast) var(--ease);
+}
+.password-toggle-btn:hover { color: var(--leaf-700); background: var(--leaf-100); }
+.password-toggle-btn svg { width: 18px; height: 18px; }
+.password-toggle-btn .icon-eye-off { display: none; }
+.password-toggle-btn.is-visible .icon-eye { display: none; }
+.password-toggle-btn.is-visible .icon-eye-off { display: block; }
+
+/* ---------- Row for "Password" label + "Forgot password?" link ---------- */
+.field-label-row { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-bottom: 0.5rem; }
+.field-label-row label { margin-bottom: 0; }
+.field-label-row a { font-size: 0.82rem; font-weight: 600; }
+
+/* ---------- Password strength meter ---------- */
+.strength-meter { margin-top: 0.6rem; }
+.strength-bars { display: flex; gap: 0.3rem; }
+.strength-bar { height: 4px; flex: 1; border-radius: var(--radius-pill); background: var(--border-strong); transition: background var(--fast) var(--ease); }
+.strength-bar.filled[data-level="1"] { background: var(--tomato-500); }
+.strength-bar.filled[data-level="2"] { background: var(--amber-500); }
+.strength-bar.filled[data-level="3"] { background: var(--amber-400); }
+.strength-bar.filled[data-level="4"] { background: var(--leaf-600); }
+.strength-label { display: block; font-size: 0.76rem; color: var(--text-muted); margin-top: 0.35rem; }
+
+/* ---------- "or continue with" divider ---------- */
+.auth-divider { display: flex; align-items: center; gap: 0.9rem; margin: 1.5rem 0; color: var(--text-muted); font-size: 0.8rem; }
+.auth-divider::before, .auth-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+/* ---------- Social login buttons ---------- */
+.social-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; }
+.social-btn {
+  display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+  padding: 0.75rem 1rem; border: 1.5px solid var(--border-strong); border-radius: var(--radius-sm);
+  background: var(--surface); color: var(--ink); font-weight: 600; font-size: 0.88rem;
+  cursor: pointer; transition: border-color var(--fast) var(--ease), box-shadow var(--fast) var(--ease), transform var(--fast) var(--ease);
+}
+.social-btn:hover { border-color: var(--leaf-600); box-shadow: var(--shadow-sm); transform: translateY(-1px); }
+.social-btn:active { transform: translateY(0); }
+.social-btn svg { width: 18px; height: 18px; flex-shrink: 0; }
+@media (max-width: 420px) { .social-buttons { grid-template-columns: 1fr; } }
+
+/* ---------- Toast: info variant (used by social-login placeholders) ---------- */
+.toast.info { background: var(--ink-soft); }
+
+/* ---------- Small helper banners used on forgot/reset password pages ---------- */
+.auth-note {
+  display: flex; gap: 0.7rem; align-items: flex-start;
+  background: var(--leaf-100); color: var(--leaf-700); border-radius: var(--radius-sm);
+  padding: 0.9rem 1.1rem; font-size: 0.85rem; margin-top: 1.25rem;
+}
+.auth-note svg { width: 18px; height: 18px; flex-shrink: 0; margin-top: 0.1rem; }
+.auth-note.warn { background: var(--amber-100); color: var(--amber-600); }
+.auth-note.danger { background: var(--tomato-100); color: var(--tomato-600); }
+.auth-note a { color: inherit; text-decoration: underline; }
+
+/* ---------- Reset-link demo box (frontend-only simulation) ---------- */
+.reset-link-box {
+  margin-top: 1.25rem; padding: 1rem 1.1rem; background: var(--surface-sunken);
+  border: 1px dashed var(--border-strong); border-radius: var(--radius-sm);
+}
+.reset-link-box .reset-link-label { font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); margin-bottom: 0.4rem; }
+.reset-link-box .reset-link-row { display: flex; gap: 0.6rem; align-items: center; }
+.reset-link-box input.input { font-family: var(--font-mono); font-size: 0.8rem; }
+
+/* ---------- Role tag on admin/volunteer auth pages ---------- */
+.auth-role-badge {
+  display: inline-flex; align-items: center; gap: 0.4em; font-family: var(--font-mono);
+  font-size: 0.72rem; letter-spacing: 0.04em; text-transform: uppercase;
+  padding: 0.3em 0.8em; border-radius: var(--radius-pill); margin-bottom: 1rem;
+  background: var(--amber-100); color: var(--amber-600);
+}

@@ -1,0 +1,76 @@
+/* ==========================================
+   FoodShare — Design Tokens
+   Palette: harvest greens + grain amber + a
+   tomato-red urgency accent for expiring food.
+   Type: Fraunces (display) / Work Sans (UI & body)
+         / IBM Plex Mono (data — quantities, timers)
+   ========================================== */
+
+:root {
+  /* ---- Color: ink & paper ---- */
+  --ink: #1C2A1E;
+  --ink-soft: #445243;
+  --paper: #F3F5EF;
+  --surface: #FFFFFF;
+  --surface-sunken: #EDF0E6;
+  --border: #DEE3D5;
+  --border-strong: #C6CDBC;
+
+  /* ---- Color: leaf (primary / trust, growth) ---- */
+  --leaf-100: #E1EEE0;
+  --leaf-300: #9AC49C;
+  --leaf-500: #3E7A45;
+  --leaf-600: #2F6B3C;
+  --leaf-700: #1F4A28;
+  --leaf-900: #12301A;
+
+  /* ---- Color: amber (secondary / grain, warmth) ---- */
+  --amber-100: #FBEBCB;
+  --amber-400: #E0A03A;
+  --amber-500: #CC8B27;
+  --amber-600: #A66F1B;
+
+  /* ---- Color: tomato (urgency / expiry, alerts) ---- */
+  --tomato-100: #FBE1D8;
+  --tomato-400: #E06B44;
+  --tomato-500: #D1502F;
+  --tomato-600: #AE3E22;
+
+  /* ---- Semantic aliases ---- */
+  --color-primary: var(--leaf-600);
+  --color-primary-hover: var(--leaf-700);
+  --color-secondary: var(--amber-500);
+  --color-secondary-hover: var(--amber-600);
+  --color-danger: var(--tomato-500);
+  --color-danger-hover: var(--tomato-600);
+  --text-main: var(--ink);
+  --text-muted: var(--ink-soft);
+
+  /* ---- Type ---- */
+  --font-display: 'Fraunces', ui-serif, Georgia, serif;
+  --font-body: 'Work Sans', -apple-system, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+
+  /* ---- Shape & shadow ---- */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --radius-pill: 999px;
+  --shadow-sm: 0 1px 2px rgba(28, 42, 30, 0.06), 0 1px 3px rgba(28, 42, 30, 0.08);
+  --shadow-md: 0 6px 20px rgba(28, 42, 30, 0.10);
+  --shadow-lg: 0 18px 45px rgba(28, 42, 30, 0.16);
+
+  /* ---- Motion ---- */
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --fast: 0.15s;
+  --normal: 0.28s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,75 @@
+/* ==========================================
+   FoodShare — Dashboard layout
+   ========================================== */
+
+.dash-wrapper { display: flex; min-height: 100vh; }
+
+.dash-sidebar {
+  width: 250px; flex-shrink: 0; background: var(--leaf-900); color: rgba(243, 245, 239, 0.8);
+  padding: 1.5rem 0; position: sticky; top: 0; height: 100vh; overflow-y: auto;
+}
+.dash-sidebar .brand { color: var(--paper); padding: 0 1.5rem 1.5rem; border-bottom: 1px solid rgba(243,245,239,0.12); margin-bottom: 1rem; }
+.dash-sidebar .brand-mark { background: var(--paper); color: var(--leaf-700); }
+
+.dash-role-tag {
+  margin: 0 1.5rem 1.25rem; font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase;
+  letter-spacing: 0.08em; color: var(--leaf-300);
+}
+
+.dash-nav { list-style: none; margin: 0; padding: 0; }
+.dash-nav a {
+  display: flex; align-items: center; gap: 0.8rem; padding: 0.8rem 1.5rem; color: rgba(243,245,239,0.72);
+  font-weight: 500; font-size: 0.92rem; border-left: 3px solid transparent;
+}
+.dash-nav a:hover, .dash-nav a.active { color: var(--paper); background: rgba(243,245,239,0.06); border-left-color: var(--amber-400); }
+.dash-nav svg { width: 18px; height: 18px; flex-shrink: 0; }
+
+.dash-nav-foot { margin-top: auto; padding: 1.25rem 1.5rem 0; }
+
+.dash-main { flex-grow: 1; min-width: 0; }
+.dash-topbar {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  padding: 1.15rem 2rem; background: var(--surface); border-bottom: 1px solid var(--border);
+  position: sticky; top: 0; z-index: 50;
+}
+.dash-topbar h1 { font-size: 1.35rem; margin: 0; }
+.dash-user { display: flex; align-items: center; gap: 0.7rem; }
+.avatar {
+  width: 38px; height: 38px; border-radius: 50%; background: var(--leaf-100); color: var(--leaf-700);
+  display: flex; align-items: center; justify-content: center; font-weight: 700; font-family: var(--font-display);
+  flex-shrink: 0;
+}
+.dash-content { padding: 2rem; max-width: 1180px; }
+
+.stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; margin-bottom: 2.5rem; }
+.stat-card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md);
+  padding: 1.4rem; box-shadow: var(--shadow-sm);
+}
+.stat-card .stat-label { font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase;
+  letter-spacing: 0.06em; color: var(--text-muted); }
+.stat-card .stat-value { font-family: var(--font-display); font-size: 2rem; font-weight: 600; margin-top: 0.35rem; color: var(--ink); }
+.stat-card .stat-sub { font-size: 0.8rem; color: var(--leaf-600); margin-top: 0.35rem; font-weight: 600; }
+
+@media (max-width: 1000px) { .stat-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 900px) {
+  .dash-sidebar { position: fixed; left: -260px; top: 0; z-index: 200; transition: left var(--normal) var(--ease); box-shadow: var(--shadow-lg); }
+  .dash-sidebar.open { left: 0; }
+  .dash-content { padding: 1.25rem; }
+  .dash-topbar { padding: 1rem 1.25rem; }
+}
+@media (max-width: 560px) { .stat-grid { grid-template-columns: 1fr; } }
+@media (max-width: 480px) {
+  .dash-topbar h1 { font-size: 1.05rem; }
+  .dash-user-text { display: none; }
+  .section-title-row { flex-direction: column; align-items: stretch; }
+  .section-title-row input.input { max-width: none !important; }
+}
+
+.section-title-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 0.75rem; }
+.section-title-row h2 { font-size: 1.2rem; margin: 0; }
+
+.donation-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.25rem; }
+@media (max-width: 360px) {
+  .donation-grid { grid-template-columns: 1fr; }
+}
