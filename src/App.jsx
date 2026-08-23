@@ -61,7 +61,8 @@ export default function App() {
   const path = window.location.pathname.replace(/\/+$/, "") || "/";
 
   // Render React pages if registered in pageRegistry
-  const route = pageRegistry.find((r) => r.path === path);
+  const routePath = path === "/about.html" ? "/about" : path;
+  const route = pageRegistry.find((r) => r.path === routePath);
   if (route && route.component) {
     const PageComponent = route.component;
     return (
