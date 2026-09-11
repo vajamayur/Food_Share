@@ -16,6 +16,7 @@ import ResetPassword from "./pages/ResetPassword";
 import VolunteerLogin from "./pages/VolunteerLogin";
 import VolunteerSignup from "./pages/VolunteerSignup";
 import AllPages from "./AllPages";
+import Blog from "./pages/Blog";
 
 export const pageRegistry = [
   { name: "Home", path: "/", component: Home },
@@ -23,6 +24,7 @@ export const pageRegistry = [
   { name: "Signup", path: "/signup", component: Signup },
   { name: "About", path: "/about", component: About },
   { name: "Contact", path: "/contact", component: Contact },
+  { name: "Blog", path: "/blog", component: Blog },
   { name: "Donor Dashboard", path: "/donor-dashboard", component: DonorDashboard },
   { name: "NGO Dashboard", path: "/ngo-dashboard", component: NgoDashboard },
   { name: "Volunteer Dashboard", path: "/volunteer-dashboard", component: VolunteerDashboard },

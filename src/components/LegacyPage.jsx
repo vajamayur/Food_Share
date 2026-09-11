@@ -27,6 +27,12 @@ export function FoodSharePage({ config }) {
   useEffect(() => {
     document.title = config.title || "FoodShare";
     document.documentElement.lang = "en";
+    document.querySelectorAll(".nav-links").forEach((nav) => {
+      if (nav.querySelector('a[href="/blog"]')) return;
+      const item = document.createElement("li");
+      item.innerHTML = '<a href="/blog">Blog</a>';
+      nav.insertBefore(item, nav.lastElementChild);
+    });
     const scripts = [];
     let cancelled = false;
 
