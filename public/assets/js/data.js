@@ -150,6 +150,15 @@ const FS = (function () {
     if (!s) return null;
     return getUsers().find(u => u.id === s.userId) || null;
   }
+  function updateUser(userId, changes) {
+    const users = getUsers();
+    const idx = users.findIndex(u => u.id === userId);
+    if (idx < 0) return { ok: false, error: 'User not found.' };
+    const updated = Object.assign({}, users[idx], changes);
+    users[idx] = updated;
+    saveUsers(users);
+    return { ok: true, user: updated };
+  }
   const DASHBOARD_BY_ROLE = {
     donor: 'donor-dashboard.html',
     ngo: 'ngo-dashboard.html',
@@ -287,7 +296,7 @@ const FS = (function () {
 
   return {
     CATEGORIES, UNITS, uid, seedIfNeeded,
-    signup, login, logout, getCurrentUser, requireAuth, dashboardFor, getUsers,
+    signup, login, logout, getCurrentUser, updateUser, requireAuth, dashboardFor, getUsers,
     requestPasswordReset, verifyResetToken, resetPassword,
     getDonations, getDonation, getDonationsByDonor, getAvailableDonations, getDonationsByNgo,
     getDeliverableDonations, getDonationsByVolunteer,

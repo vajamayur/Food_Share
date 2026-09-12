@@ -56,6 +56,16 @@ function fsMountUserChrome(user, opts) {
   const roleLabels = { donor: 'Donor', ngo: user.orgName || 'NGO Partner', admin: 'Administrator', volunteer: 'Volunteer' };
   if (roleEl) roleEl.textContent = roleLabels[user.role] || user.role;
   if (avatarEl) avatarEl.textContent = fsInitials(user.name);
+  const userWrap = document.querySelector('.dash-user');
+  if (userWrap && !userWrap.querySelector('[data-edit-profile]')) {
+    const editButton = document.createElement('button');
+    editButton.className = 'btn btn-ghost btn-sm dash-profile-button';
+    editButton.type = 'button';
+    editButton.dataset.editProfile = '';
+    editButton.textContent = 'Edit profile';
+    editButton.addEventListener('click', () => fsOpenProfileModal(FS.getCurrentUser() || user));
+    userWrap.appendChild(editButton);
+  }
   document.querySelectorAll('[data-logout]').forEach(btn => {
     btn.addEventListener('click', () => {
       const loginPage = { admin: 'admin-login.html', volunteer: 'volunteer-login.html' }[user.role] || 'login.html';
@@ -63,6 +73,64 @@ function fsMountUserChrome(user, opts) {
       window.location.href = loginPage;
     });
   });
+}
+
+function fsOpenProfileModal(user) {
+  let modal = document.getElementById('profileModal');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.className = 'modal-backdrop';
+    modal.id = 'profileModal';
+    modal.innerHTML = `<div class="modal-box profile-modal-box" role="dialog" aria-modal="true" aria-labelledby="profileModalTitle">
+      <button class="modal-close" type="button" aria-label="Close profile editor">×</button>
+      <h3 id="profileModalTitle">Edit your profile</h3>
+      <p class="profile-modal-intro">Keep your contact details up to date so FoodShare partners know who to reach.</p>
+      <form class="profile-form">
+        <label class="field-label" for="profileName">Name<input class="input" id="profileName" name="name" required></label>
+        <label class="field-label" for="profileOrg">Organization<input class="input" id="profileOrg" name="orgName"></label>
+        <label class="field-label" for="profileEmail">Email<input class="input" id="profileEmail" name="email" type="email" required></label>
+        <label class="field-label" for="profilePhone">Phone<input class="input" id="profilePhone" name="phone"></label>
+        <label class="field-label" for="profileAddress">Address<input class="input" id="profileAddress" name="address"></label>
+        <p class="profile-form-message" role="status"></p>
+        <button class="btn btn-primary btn-block" type="submit">Save changes</button>
+      </form>
+    </div>`;
+    document.body.appendChild(modal);
+    modal.querySelector('.modal-close').addEventListener('click', () => modal.classList.remove('open'));
+    modal.addEventListener('click', (event) => {
+      if (event.target === modal) modal.classList.remove('open');
+    });
+    modal.querySelector('.profile-form').addEventListener('submit', (event) => {
+      event.preventDefault();
+      const form = new FormData(event.currentTarget);
+      const result = FS.updateUser(user.id, {
+        name: String(form.get('name')).trim(),
+        orgName: String(form.get('orgName')).trim(),
+        email: String(form.get('email')).trim(),
+        phone: String(form.get('phone')).trim(),
+        address: String(form.get('address')).trim()
+      });
+      const message = modal.querySelector('.profile-form-message');
+      if (!result.ok) {
+        message.textContent = result.error;
+        message.className = 'profile-form-message error';
+        return;
+      }
+      user = result.user;
+      fsMountUserChrome(user);
+      message.textContent = 'Profile updated.';
+      message.className = 'profile-form-message success';
+      setTimeout(() => modal.classList.remove('open'), 500);
+    });
+  }
+  modal.querySelector('#profileName').value = user.name || '';
+  modal.querySelector('#profileOrg').value = user.orgName || '';
+  modal.querySelector('#profileEmail').value = user.email || '';
+  modal.querySelector('#profilePhone').value = user.phone || '';
+  modal.querySelector('#profileAddress').value = user.address || '';
+  modal.querySelector('.profile-form-message').textContent = '';
+  modal.classList.add('open');
+  modal.querySelector('#profileName').focus();
 }
 
 function fsEscape(str) {
