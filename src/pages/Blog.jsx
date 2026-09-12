@@ -66,7 +66,7 @@ export default function Blog() {
         <section className="blog-intro section">
           <div className="container">
             <p className="eyebrow">FoodShare journal</p>
-            <h1>Blog &amp; News</h1>
+            <h1 className="blog-title-fade">Blog &amp; News</h1>
             <p>Discover useful information, practical tips, and community stories that can help us reduce food waste and build a more sustainable future.</p>
           </div>
         </section>
@@ -86,7 +86,6 @@ export default function Blog() {
                   {article.list && <ul>{article.list.map((item) => <li key={item}>{item}</li>)}</ul>}
                   {article.flow && <p className="blog-flow">{article.flow}</p>}
                   <button className="blog-read-more" type="button" aria-pressed={selectedArticle === article.title} onClick={() => setSelectedArticle((current) => current === article.title ? null : article.title)}>
-                    {/* Read More <span aria-hidden="true">→</span> */}
                   </button>
                 </article>
               ))}

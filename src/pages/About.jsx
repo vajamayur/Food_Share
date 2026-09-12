@@ -2,6 +2,15 @@ import pages from "../pages.json";
 import { FoodSharePage } from "../components/LegacyPage";
 
 const missionVisionSection = `
+<section class="about-community section-tight" aria-labelledby="community-title">
+<div class="container">
+<div class="section-head">
+<div class="eyebrow">The FoodShare impact</div>
+<h2 id="community-title">One shared meal can bring a whole community closer</h2>
+</div>
+<img class="about-community-image" src="/assets/about-community.svg" alt="Happy children receiving shared meals through a community food program" loading="lazy">
+</div>
+</section>
 <!-- Mission and vision -->
 <section class="section-tight" style="background: var(--surface-sunken);">
 <div class="container">
