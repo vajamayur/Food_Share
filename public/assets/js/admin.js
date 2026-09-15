@@ -64,6 +64,7 @@ function bindUserSearch() {
 
 function renderAll() {
   const stats = FS.getAdminStats();
+  ensureAdminAnalytics();
   document.getElementById('statUsers').textContent = stats.totalUsers;
   document.getElementById('statDonations').textContent = stats.totalDonations;
   document.getElementById('statCompleted').textContent = stats.completed;
@@ -76,8 +77,69 @@ function renderAll() {
   document.getElementById('statAccepted').textContent = stats.accepted;
   document.getElementById('statCompleted2').textContent = stats.completed;
   document.getElementById('statCancelled').textContent = stats.cancelled;
+  document.getElementById('adminDonors').textContent = stats.donors;
+  document.getElementById('adminNgos').textContent = stats.ngos;
+  document.getElementById('adminVolunteers').textContent = stats.volunteers;
+  document.getElementById('adminPending').textContent = stats.available + stats.accepted;
+  document.getElementById('adminRescued').textContent = stats.mealsShared;
+  renderAdminCharts();
   renderUsers();
   renderDonations();
+}
+
+function ensureAdminAnalytics() {
+  if (document.getElementById('adminDonors')) return;
+  const overview = document.querySelector('[data-panel="overview"]');
+  overview.insertAdjacentHTML('afterbegin', `<div class="admin-metric-grid" aria-label="Platform metrics">
+    <div class="stat-card"><div class="stat-label">Donors</div><div class="stat-value" id="adminDonors">0</div></div>
+    <div class="stat-card"><div class="stat-label">NGOs</div><div class="stat-value" id="adminNgos">0</div></div>
+    <div class="stat-card"><div class="stat-label">Volunteers</div><div class="stat-value" id="adminVolunteers">0</div></div>
+    <div class="stat-card"><div class="stat-label">Pending donations</div><div class="stat-value" id="adminPending">0</div><div class="stat-sub">available or accepted</div></div>
+    <div class="stat-card"><div class="stat-label">Food quantity rescued</div><div class="stat-value" id="adminRescued">0</div><div class="stat-sub">estimated meals</div></div>
+  </div>
+  <div class="admin-chart-grid">
+    <section class="admin-chart-card"><div class="section-title-row"><h2>Monthly donations</h2><span class="chart-caption">last 6 months</span></div><div class="admin-chart" id="monthlyDonationChart" role="img" aria-label="Monthly donation chart"></div></section>
+    <section class="admin-chart-card"><div class="section-title-row"><h2>User activity</h2><span class="chart-caption">new users by month</span></div><div class="admin-chart" id="userActivityChart" role="img" aria-label="User activity chart"></div></section>
+  </div>`);
+}
+
+function getRecentMonths() {
+  const months = [];
+  const today = new Date();
+  for (let offset = 5; offset >= 0; offset -= 1) {
+    const date = new Date(today.getFullYear(), today.getMonth() - offset, 1);
+    months.push({
+      key: `${date.getFullYear()}-${date.getMonth()}`,
+      label: date.toLocaleDateString('en', { month: 'short' }),
+      year: date.getFullYear(),
+      month: date.getMonth()
+    });
+  }
+  return months;
+}
+
+function renderAdminCharts() {
+  const months = getRecentMonths();
+  const donations = FS.getDonations();
+  const users = FS.getUsers();
+  const donationValues = months.map(period => donations.filter(item => {
+    const date = new Date(item.createdAt);
+    return date.getFullYear() === period.year && date.getMonth() === period.month;
+  }).length);
+  const userValues = months.map(period => users.filter(item => {
+    const date = new Date(item.createdAt);
+    return date.getFullYear() === period.year && date.getMonth() === period.month;
+  }).length);
+  renderBarChart('monthlyDonationChart', months, donationValues, 'donations');
+  renderBarChart('userActivityChart', months, userValues, 'new users');
+}
+
+function renderBarChart(id, periods, values, label) {
+  const chart = document.getElementById(id);
+  const max = Math.max(...values, 1);
+  chart.innerHTML = values.map((value, index) => `<div class="chart-column">
+    <span class="chart-value">${value}</span><div class="chart-bar" style="height:${Math.max(value / max * 100, value ? 12 : 3)}%" title="${value} ${label} in ${periods[index].label}"></div><span class="chart-label">${periods[index].label}</span>
+  </div>`).join('');
 }
 
 function renderUsers() {

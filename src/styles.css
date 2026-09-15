@@ -608,15 +608,30 @@ table.pa-table tr:last-child td { border-bottom: none; }
   letter-spacing: 0.06em; color: var(--text-muted); }
 .stat-card .stat-value { font-family: var(--font-display); font-size: 2rem; font-weight: 600; margin-top: 0.35rem; color: var(--ink); }
 .stat-card .stat-sub { font-size: 0.8rem; color: var(--leaf-600); margin-top: 0.35rem; font-weight: 600; }
+.admin-metric-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1.25rem; margin-bottom: 2.5rem; }
+.admin-chart-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; margin-bottom: 2.5rem; }
+.admin-chart-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1.4rem; box-shadow: var(--shadow-sm); }
+.admin-chart-card .section-title-row { margin-bottom: 1rem; }
+.admin-chart-card h2 { font-size: 1.05rem; }
+.chart-caption { color: var(--text-muted); font-size: 0.75rem; }
+.admin-chart { height: 190px; display: flex; align-items: stretch; gap: 0.8rem; padding: 1.5rem 0.4rem 0; border-bottom: 1px solid var(--border); }
+.chart-column { flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 0.35rem; }
+.chart-value, .chart-label { color: var(--text-muted); font-family: var(--font-mono); font-size: 0.68rem; }
+.chart-value { min-height: 0.8rem; }
+.chart-label { text-transform: uppercase; }
+.chart-bar { width: min(34px, 70%); min-height: 3px; border-radius: 4px 4px 0 0; background: var(--leaf-600); transition: height 0.3s var(--ease); }
+.admin-chart-card:nth-child(2) .chart-bar { background: var(--amber-400); }
 
+@media (max-width: 1100px) { .admin-metric-grid { grid-template-columns: repeat(3, 1fr); } }
 @media (max-width: 1000px) { .stat-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 900px) {
   .dash-sidebar { position: fixed; left: -260px; top: 0; z-index: 200; transition: left var(--normal) var(--ease); box-shadow: var(--shadow-lg); }
   .dash-sidebar.open { left: 0; }
   .dash-content { padding: 1.25rem; }
   .dash-topbar { padding: 1rem 1.25rem; }
+  .admin-chart-grid { grid-template-columns: 1fr; }
 }
-@media (max-width: 560px) { .stat-grid { grid-template-columns: 1fr; } }
+@media (max-width: 560px) { .stat-grid, .admin-metric-grid { grid-template-columns: 1fr; } }
 @media (max-width: 480px) {
   .dash-topbar h1 { font-size: 1.05rem; }
   .dash-user-text { display: none; }

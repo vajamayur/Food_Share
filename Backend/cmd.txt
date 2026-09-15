@@ -1,0 +1,13 @@
+./start-all.sh
+pwd
+ls -la
+
+Fix mvnw permissions for all services
+chmod +x service-registry/mvnw
+chmod +x api-gateway/mvnw
+chmod +x auth-service/mvnw
+chmod +x user-service/mvnw
+chmod +x food-service/mvnw
+
+You can verify:
+ls -l service-registry/mvnw
