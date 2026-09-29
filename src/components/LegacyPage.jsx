@@ -21,7 +21,7 @@ function NotFound() {
  * submit handler, tab/filter binding, or dashboard data render, since
  * dangerouslySetInnerHTML alone never executes embedded scripts.
  */
-export function FoodSharePage({ config }) {
+export function FoodSharePage({ config, pageKey = "page" }) {
   const [scriptError, setScriptError] = useState(false);
 
   useEffect(() => {
@@ -77,7 +77,8 @@ export function FoodSharePage({ config }) {
     return <NotFound />;
   }
 
-  return <div dangerouslySetInnerHTML={{ __html: config.body }} />;
+  const pageClass = pageKey.replace(/[^a-z0-9]+/gi, "-").replace(/^-|-$/g, "");
+  return <div className={`legacy-page legacy-page-${pageClass}`} dangerouslySetInnerHTML={{ __html: config.body }} />;
 }
 
 /**
@@ -89,5 +90,5 @@ export function FoodSharePage({ config }) {
 export default function LegacyPage({ pageKey }) {
   const config = pages[pageKey];
   if (!config) return <NotFound />;
-  return <FoodSharePage config={config} />;
+  return <FoodSharePage config={config} pageKey={pageKey} />;
 }

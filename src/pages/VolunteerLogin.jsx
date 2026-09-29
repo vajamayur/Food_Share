@@ -1,5 +1,5 @@
-import LegacyPage from "../components/LegacyPage";
+import Login from "./Login";
 
 export default function VolunteerLogin() {
-  return <LegacyPage pageKey="volunteer-login.html" />;
+  return <Login />;
 }

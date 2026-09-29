@@ -41,9 +41,8 @@ public class User {
     @Column(nullable = false, unique = true, length = 100)
     private String email;
 
-    @NotBlank(message = "Phone number is required")
     @Pattern(regexp = "^[0-9]{10}$", message = "Phone number must contain exactly 10 digits")
-    @Column(nullable = false, unique = true, length = 10)
+    @Column(unique = true, length = 10)
     private String phone;
 
     @NotBlank(message = "Password is required")

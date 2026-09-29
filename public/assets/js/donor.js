@@ -56,7 +56,7 @@ function bindFilters() {
 }
 
 function bindForm() {
-  document.getElementById('donationForm').addEventListener('submit', (e) => {
+  document.getElementById('donationForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     const foodName = document.getElementById('foodName').value.trim();
     const category = document.getElementById('category').value;
@@ -73,12 +73,46 @@ function bindForm() {
     toggleError('addressError', !pickupAddress); if (!pickupAddress) valid = false;
     if (!valid) return;
 
-    FS.createDonation({
-      donorId: currentUser.id, donorName: currentUser.name,
-      foodName, category, quantity, unit,
-      expiryTime: new Date(expiryTime).toISOString(),
-      pickupAddress, description, status: 'available'
-    });
+    const food = {
+      donorId: Number(currentUser.id),
+      foodName,
+      category,
+      quantity,
+      unit,
+      expiryTime: new Date(expiryTime).toISOString().slice(0, 19),
+      pickupAddress,
+      description
+    };
+
+    const submitButton = e.target.querySelector('button[type="submit"]');
+    if (submitButton) submitButton.disabled = true;
+    try {
+      const response = await fetch('http://localhost:8079/api/foods', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('foodshare_access_token') || ''}`
+        },
+        body: JSON.stringify(food)
+      });
+      const payload = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        throw new Error(payload.message || payload.error || 'Could not save the food share.');
+      }
+
+      FS.createDonation({
+        ...food,
+        donorName: currentUser.name,
+        status: String(payload.status || 'AVAILABLE').toLowerCase(),
+        backendId: payload.id
+      });
+    } catch (error) {
+      fsToast(error.message, 'error');
+      if (submitButton) submitButton.disabled = false;
+      return;
+    }
+    if (submitButton) submitButton.disabled = false;
 
     fsToast('Donation posted — nearby NGOs can now see it.', 'success');
     e.target.reset();

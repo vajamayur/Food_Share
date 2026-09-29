@@ -141,11 +141,53 @@ function closeAcceptModal() {
   pendingAcceptId = null;
   document.getElementById('acceptModal').classList.remove('open');
 }
-function confirmAccept() {
+async function confirmAccept() {
   if (pendingAcceptId) {
-    FS.acceptDonation(pendingAcceptId, ngoUser);
-    fsToast('Donation accepted — head over to collect it.', 'success');
-    renderAll();
+    const donation = FS.getDonation(pendingAcceptId);
+    const backendFoodId = donation && donation.backendId;
+    const acceptButton = document.getElementById('confirmAcceptBtn');
+    if (acceptButton) acceptButton.disabled = true;
+
+    try {
+      if (backendFoodId) {
+        const response = await fetch('http://localhost:8079/api/requests', {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('foodshare_access_token') || ''}`
+          },
+          body: JSON.stringify({
+            foodId: Number(backendFoodId),
+            userId: Number(ngoUser.id),
+            quantity: Math.max(1, Math.ceil(Number(donation.quantity) || 1)),
+            message: 'Food request from NGO dashboard'
+          })
+        });
+        const payload = await response.json().catch(() => ({}));
+        if (!response.ok) throw new Error(payload.message || payload.error || 'Could not save the food request.');
+
+        const acceptResponse = await fetch(`http://localhost:8079/api/requests/${payload.id}/accept`, {
+          method: 'PUT',
+          headers: {
+            Accept: 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('foodshare_access_token') || ''}`
+          }
+        });
+        const acceptedRequest = await acceptResponse.json().catch(() => ({}));
+        if (!acceptResponse.ok) {
+          throw new Error(acceptedRequest.message || acceptedRequest.error || 'Could not accept the food request.');
+        }
+      }
+
+      FS.acceptDonation(pendingAcceptId, ngoUser);
+      fsToast('Food request saved in the database.', 'success');
+      renderAll();
+    } catch (error) {
+      fsToast(error.message, 'error');
+    } finally {
+      if (acceptButton) acceptButton.disabled = false;
+    }
   }
   closeAcceptModal();
 }

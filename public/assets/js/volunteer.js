@@ -130,20 +130,62 @@ function renderHistory() {
   `).join('');
 }
 
-function claimTask(id) {
-  FS.claimDelivery(id, volUser);
-  fsToast('Delivery claimed — head out when ready.', 'success');
+async function deliveryRequest(path, foodId, volunteerId) {
+  const response = await fetch(`http://localhost:8079/api/deliveries/${path}`, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('foodshare_access_token') || ''}`
+    },
+    body: JSON.stringify({ foodId: Number(foodId), volunteerId: Number(volunteerId) })
+  });
+  if (!response.ok) {
+    const payload = await response.json().catch(() => ({}));
+    throw new Error(payload.message || payload.error || 'Could not update the delivery.');
+  }
+  return response.status === 204 ? null : response.json();
+}
+
+function backendFoodId(id) {
+  const donation = FS.getDonations().find((item) => item.id === id);
+  return donation && donation.backendId ? donation.backendId : null;
+}
+
+async function claimTask(id) {
+  const foodId = backendFoodId(id);
+  try {
+    if (foodId) await deliveryRequest('claim', foodId, volUser.id);
+    FS.claimDelivery(id, volUser);
+    fsToast('Delivery claimed — saved to the database.', 'success');
+  } catch (error) {
+    fsToast(error.message, 'error');
+  }
   renderAll();
 }
 
-function releaseTask(id) {
+async function releaseTask(id) {
+  const foodId = backendFoodId(id);
+  try {
+    if (foodId) await deliveryRequest('release', foodId, volUser.id);
+  } catch (error) {
+    fsToast(error.message, 'error');
+    return;
+  }
   FS.releaseDelivery(id);
-  fsToast('Task released back to the pool.', 'success');
+  fsToast('Task released back to the pool and database updated.', 'success');
   renderAll();
 }
 
-function deliverTask(id) {
+async function deliverTask(id) {
+  const foodId = backendFoodId(id);
+  try {
+    if (foodId) await deliveryRequest('deliver', foodId, volUser.id);
+  } catch (error) {
+    fsToast(error.message, 'error');
+    return;
+  }
   FS.markDelivered(id);
-  fsToast('Marked as delivered — thank you!', 'success');
+  fsToast('Marked as delivered — database updated.', 'success');
   renderAll();
 }

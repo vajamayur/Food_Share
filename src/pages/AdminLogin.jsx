@@ -1,5 +1,5 @@
-import LegacyPage from "../components/LegacyPage";
+import Login from "./Login";
 
 export default function AdminLogin() {
-  return <LegacyPage pageKey="admin-login.html" />;
+  return <Login />;
 }

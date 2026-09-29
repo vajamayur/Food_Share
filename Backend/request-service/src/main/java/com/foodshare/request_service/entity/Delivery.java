@@ -1,4 +1,4 @@
-package com.foodshare.auth_service.entity;
+package com.foodshare.request_service.entity;
 
 import java.time.LocalDateTime;
 
@@ -18,46 +18,37 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "users")
+@Table(name = "deliveries")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class User {
+public class Delivery {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "full_name", nullable = false)
-    private String fullName;
-
-    @Column(nullable = false, unique = true)
-    private String email;
+    @Column(nullable = false)
+    private Long foodId;
 
     @Column(nullable = false)
-    private String password;
+    private Long volunteerId;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Role role;
+    @Builder.Default
+    private DeliveryStatus status = DeliveryStatus.CLAIMED;
 
     @Column(nullable = false)
-    @Builder.Default
-    private Boolean active = true;
+    private LocalDateTime claimedAt;
 
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
+    private LocalDateTime deliveredAt;
 
     @PrePersist
     public void prePersist() {
-        if (createdAt == null) {
-            createdAt = LocalDateTime.now();
-        }
-
-        if (active == null) {
-            active = true;
-        }
+        if (claimedAt == null) claimedAt = LocalDateTime.now();
+        if (status == null) status = DeliveryStatus.CLAIMED;
     }
 }

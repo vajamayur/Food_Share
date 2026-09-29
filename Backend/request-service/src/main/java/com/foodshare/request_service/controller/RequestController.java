@@ -1,21 +1,28 @@
 package com.foodshare.request_service.controller;
 
-import com.foodshare.request_service.dto.RequestRequest;
-import com.foodshare.request_service.dto.RequestResponse;
-import com.foodshare.request_service.service.RequestService;
-import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
+import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import com.foodshare.request_service.dto.RequestRequest;
+import com.foodshare.request_service.dto.RequestResponse;
+import com.foodshare.request_service.service.RequestService;
+
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/requests")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*")
 public class RequestController {
 
     private final RequestService requestService;

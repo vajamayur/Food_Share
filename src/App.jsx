@@ -7,6 +7,11 @@ import { FoodSharePage } from "./components/LegacyPage";
 const routeAliases = {
   "/": "index.html",
   "/index.html": "index.html",
+  "/login.html": "/login",
+  "/signup.html": "/signup",
+  "/volunteer-signup.html": "/volunteer-signup",
+  "/admin-signup.html": "/admin-signup",
+  "/ngo-signup.html": "/ngo-signup",
 };
 
 function pageFromPath() {
@@ -61,7 +66,7 @@ export default function App() {
   const path = window.location.pathname.replace(/\/+$/, "") || "/";
 
   // Render React pages if registered in pageRegistry
-  const routePath = path === "/about.html" ? "/about" : path;
+  const routePath = routeAliases[path] || (path === "/about.html" ? "/about" : path);
   const route = pageRegistry.find((r) => r.path === routePath);
   if (route && route.component) {
     const PageComponent = route.component;

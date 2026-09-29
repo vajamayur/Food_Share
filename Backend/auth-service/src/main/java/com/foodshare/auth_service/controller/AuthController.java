@@ -1,20 +1,21 @@
 package com.foodshare.auth_service.controller;
 
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.foodshare.auth_service.dto.AuthResponse;
 import com.foodshare.auth_service.dto.LoginRequest;
 import com.foodshare.auth_service.dto.RegisterRequest;
 import com.foodshare.auth_service.service.AuthService;
 
 import jakarta.validation.Valid;
-
 import lombok.RequiredArgsConstructor;
-
-import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*")
 public class AuthController {
 
     private final AuthService authService;
@@ -32,7 +33,7 @@ public class AuthController {
         return authService.register(request);
     }
 
-
+    
     // =========================================
     // LOGIN
     // =========================================

@@ -11,12 +11,14 @@ import Donor from "./pages/Donor";
 import Volunteer from "./pages/Volunteer";
 import AdminLogin from "./pages/AdminLogin";
 import AdminSignup from "./pages/AdminSignup";
+import NgoSignup from "./pages/NgoSignup";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import VolunteerLogin from "./pages/VolunteerLogin";
 import VolunteerSignup from "./pages/VolunteerSignup";
 import AllPages from "./AllPages";
 import Blog from "./pages/Blog";
+import ApiDemo from "./pages/ApiDemo";
 
 export const pageRegistry = [
   { name: "Home", path: "/", component: Home },
@@ -31,6 +33,7 @@ export const pageRegistry = [
   { name: "Admin Dashboard", path: "/admin-dashboard", component: AdminDashboard },
   { name: "Admin Login", path: "/admin-login", component: AdminLogin },
   { name: "Admin Signup", path: "/admin-signup", component: AdminSignup },
+  { name: "NGO Signup", path: "/ngo-signup", component: NgoSignup },
   { name: "Forgot Password", path: "/forgot-password", component: ForgotPassword },
   { name: "Reset Password", path: "/reset-password", component: ResetPassword },
   { name: "Volunteer Login", path: "/volunteer-login", component: VolunteerLogin },
@@ -38,4 +41,5 @@ export const pageRegistry = [
   { name: "Donor", path: "/donor", component: Donor },
   { name: "Volunteer", path: "/volunteer", component: Volunteer },
   { name: "All Pages", path: "/all-pages", component: AllPages },
+  { name: "API Demo", path: "/api-demo", component: ApiDemo },
 ];

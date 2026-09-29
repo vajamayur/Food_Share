@@ -13,12 +13,14 @@ import com.foodshare.user_service.repository.UserRepository;
 import com.foodshare.user_service.service.UserService;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public UserResponse register(SignupRequest request) {
@@ -27,7 +29,8 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException("Email already exists");
         }
 
-        if (userRepository.existsByPhone(request.getPhone())) {
+        if (request.getPhone() != null && !request.getPhone().isBlank()
+            && userRepository.existsByPhone(request.getPhone())) {
             throw new RuntimeException("Phone number already exists");
         }
 
@@ -35,7 +38,7 @@ public class UserServiceImpl implements UserService {
                 .fullName(request.getFullName())
                 .email(request.getEmail())
                 .phone(request.getPhone())
-                .password(request.getPassword())   // Later replace with BCrypt
+                .password(passwordEncoder.encode(request.getPassword()))
                 .address(request.getAddress())
                 .role(request.getRole())
                 .build();
@@ -51,7 +54,7 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new RuntimeException("Invalid email"));
 
-        if (!user.getPassword().equals(request.getPassword())) {
+        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new RuntimeException("Invalid password");
         }
 
