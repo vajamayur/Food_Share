@@ -14,6 +14,7 @@ import AdminSignup from "./pages/AdminSignup";
 import NgoSignup from "./pages/NgoSignup";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
+import AdminForgotPassword from "./pages/AdminForgotPassword";
 import VolunteerLogin from "./pages/VolunteerLogin";
 import VolunteerSignup from "./pages/VolunteerSignup";
 import AllPages from "./AllPages";
@@ -36,6 +37,7 @@ export const pageRegistry = [
   { name: "NGO Signup", path: "/ngo-signup", component: NgoSignup },
   { name: "Forgot Password", path: "/forgot-password", component: ForgotPassword },
   { name: "Reset Password", path: "/reset-password", component: ResetPassword },
+  { name: "Admin Forgot Password", path: "/admin-forgot-password", component: AdminForgotPassword },
   { name: "Volunteer Login", path: "/volunteer-login", component: VolunteerLogin },
   { name: "Volunteer Signup", path: "/volunteer-signup", component: VolunteerSignup },
   { name: "Donor", path: "/donor", component: Donor },

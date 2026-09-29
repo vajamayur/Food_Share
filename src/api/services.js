@@ -59,6 +59,37 @@ export const authApi = {
   }
 };
 
+export const emailApi = {
+  async sendPasswordResetOtp({ email, otp }) {
+    console.info(`[FoodShare] Verification OTP for ${email}: ${otp}`);
+    return {
+      success: true,
+      otp,
+      message: `Verification code generated.`
+    };
+  },
+  async resetPassword({ email, password }) {
+    const users = JSON.parse(localStorage.getItem("foodshare_users") || "[]");
+    const index = users.findIndex((user) => user.email && user.email.toLowerCase() === String(email).toLowerCase());
+
+    if (index === -1) {
+      users.push({
+        id: Date.now(),
+        email: String(email).trim().toLowerCase(),
+        password,
+        name: String(email).split("@")[0],
+        role: "donor"
+      });
+      localStorage.setItem("foodshare_users", JSON.stringify(users));
+      return { success: true, message: "Password updated successfully." };
+    }
+
+    users[index] = { ...users[index], password };
+    localStorage.setItem("foodshare_users", JSON.stringify(users));
+    return { success: true, message: "Password updated successfully." };
+  }
+};
+
 export const foodApi = {
   getAvailable() {
     return apiRequest("/foods/available");

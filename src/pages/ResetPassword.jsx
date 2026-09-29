@@ -1,5 +1,5 @@
-import LegacyPage from "../components/LegacyPage";
+import ForgotPassword from "./ForgotPassword";
 
 export default function ResetPassword() {
-  return <LegacyPage pageKey="reset-password.html" />;
+  return <ForgotPassword mode="reset" />;
 }
