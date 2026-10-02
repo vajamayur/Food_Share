@@ -27,4 +27,3 @@ export MAIL_PASSWORD
 
 --- FoodShare App Password
 dvfr znqd vxpo qgwr
->>>>>>> 713e2ec (Add New Feature in Forgot Password)
