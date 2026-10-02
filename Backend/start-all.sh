@@ -4,6 +4,33 @@
 set -e
 BACKEND_DIR="$(cd "$(dirname "$0")" && pwd)"
 
+<<<<<<< HEAD
+=======
+if lsof -ti tcp:8084 >/dev/null 2>&1; then
+	echo "Auth Service is already running; run ./stop-all.sh before applying SMTP settings." >&2
+	exit 1
+fi
+
+export MAIL_HOST="${MAIL_HOST:-smtp.gmail.com}"
+export MAIL_PORT="${MAIL_PORT:-587}"
+
+if [[ -z "${MAIL_USERNAME:-}" ]]; then
+	read -r -p "SMTP sender Gmail address: " MAIL_USERNAME
+fi
+
+MAIL_PASSWORD=""
+read -r -s -p "Google App Password (input hidden): " MAIL_PASSWORD
+printf '\n'
+
+MAIL_PASSWORD="${MAIL_PASSWORD//[[:space:]]/}"
+if [[ -z "$MAIL_USERNAME" || -z "$MAIL_PASSWORD" ]]; then
+	echo "SMTP sender address and Google App Password are required." >&2
+	exit 1
+fi
+
+export MAIL_USERNAME MAIL_PASSWORD
+
+>>>>>>> 713e2ec (Add New Feature in Forgot Password)
 echo "Starting FoodShare Microservices..."
 
 start_service() {

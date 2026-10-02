@@ -1,4 +1,5 @@
 import { useState } from "react";
+<<<<<<< HEAD
 import { emailApi } from "../api/services";
 
 function generateOtp() {
@@ -6,6 +7,17 @@ function generateOtp() {
 }
 
 function PasswordInput({ value, onChange, placeholder, showPassword, onToggle }) {
+=======
+import { authApi } from "../api/services";
+
+function PasswordInput({
+  value,
+  onChange,
+  placeholder,
+  showPassword,
+  onToggle
+}) {
+>>>>>>> 713e2ec (Add New Feature in Forgot Password)
   return (
     <div className="password-field">
       <input
@@ -17,6 +29,7 @@ function PasswordInput({ value, onChange, placeholder, showPassword, onToggle })
         onChange={onChange}
         placeholder={placeholder}
       />
+<<<<<<< HEAD
       <button
         type="button"
         className={`password-toggle-btn ${showPassword ? "is-visible" : ""}`}
@@ -28,6 +41,43 @@ function PasswordInput({ value, onChange, placeholder, showPassword, onToggle })
           <circle cx="12" cy="12" r="3" />
         </svg>
         <svg className="icon-eye-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+=======
+
+      <button
+        type="button"
+        className={`password-toggle-btn ${
+          showPassword ? "is-visible" : ""
+        }`}
+        onClick={onToggle}
+        aria-label={
+          showPassword ? "Hide password" : "Show password"
+        }
+      >
+        <svg
+          className="icon-eye"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z" />
+          <circle cx="12" cy="12" r="3" />
+        </svg>
+
+        <svg
+          className="icon-eye-off"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+>>>>>>> 713e2ec (Add New Feature in Forgot Password)
           <path d="M3 3l18 18" />
           <path d="M10.6 10.6A2 2 0 0 0 13.4 13.4" />
           <path d="M9.1 5.5A10.5 10.5 0 0 1 12 5c6.5 0 10 7 10 7a16.7 16.7 0 0 1-4 5.3" />
@@ -38,6 +88,7 @@ function PasswordInput({ value, onChange, placeholder, showPassword, onToggle })
   );
 }
 
+<<<<<<< HEAD
 export default function ForgotPassword({ mode = "forgot", accountLabel = "FoodShare", loginPath = "/login" }) {
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
@@ -52,15 +103,50 @@ export default function ForgotPassword({ mode = "forgot", accountLabel = "FoodSh
 
   async function handleSendOtp(event) {
     event.preventDefault();
+=======
+export default function ForgotPassword({
+  mode = "forgot",
+  accountLabel = "FoodShare",
+  loginPath = "/login"
+}) {
+  const [email, setEmail] = useState("");
+  const [otp, setOtp] = useState("");
+
+  const [newPassword, setNewPassword] = useState("");
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+
+  const [otpSent, setOtpSent] = useState(false);
+  const [otpVerified, setOtpVerified] = useState(false);
+
+  const [isSending, setIsSending] = useState(false);
+  const [isVerifying, setIsVerifying] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(false);
+
+  // ================================
+  // SEND OTP
+  // ================================
+  async function handleSendOtp(event) {
+    event.preventDefault();
+
+>>>>>>> 713e2ec (Add New Feature in Forgot Password)
     setError("");
     setSuccess("");
 
     const trimmedEmail = email.trim();
+<<<<<<< HEAD
+=======
+
+>>>>>>> 713e2ec (Add New Feature in Forgot Password)
     if (!trimmedEmail || !trimmedEmail.includes("@")) {
       setError("Please enter a valid email address.");
       return;
     }
 
+<<<<<<< HEAD
     const generatedOtp = generateOtp();
     setIsSending(true);
 
@@ -76,17 +162,86 @@ export default function ForgotPassword({ mode = "forgot", accountLabel = "FoodSh
       setSuccess(`Verification code generated for ${trimmedEmail}.`);
     } catch (requestError) {
       setError(requestError.message || "Could not generate verification code.");
+=======
+    setIsSending(true);
+
+    try {
+      const result = await authApi.forgotPassword(
+        trimmedEmail
+      );
+
+      setOtpSent(true);
+      setOtpVerified(false);
+
+      setSuccess(
+        result.message ||
+          "OTP has been sent to your email."
+      );
+    } catch (requestError) {
+      setError(
+        requestError.message ||
+          "Could not send OTP."
+      );
+>>>>>>> 713e2ec (Add New Feature in Forgot Password)
     } finally {
       setIsSending(false);
     }
   }
 
+<<<<<<< HEAD
   async function handleResetPassword(event) {
     event.preventDefault();
+=======
+  // ================================
+  // VERIFY OTP
+  // ================================
+  async function handleVerifyOtp(event) {
+    event.preventDefault();
+
+    setError("");
+    setSuccess("");
+
+    if (!otp || otp.length !== 6) {
+      setError("Please enter a valid 6-digit OTP.");
+      return;
+    }
+
+    setIsVerifying(true);
+
+    try {
+      const result = await authApi.verifyOtp(
+        email.trim(),
+        otp
+      );
+
+      setOtpVerified(true);
+
+      setSuccess(
+        result.message ||
+          "OTP verified successfully."
+      );
+    } catch (requestError) {
+      setError(
+        requestError.message ||
+          "Invalid or expired OTP."
+      );
+    } finally {
+      setIsVerifying(false);
+    }
+  }
+
+  // ================================
+  // RESET PASSWORD
+  // ================================
+  async function handleResetPassword(event) {
+    event.preventDefault();
+
+>>>>>>> 713e2ec (Add New Feature in Forgot Password)
     setError("");
     setSuccess("");
 
     if (!otpSent) {
+<<<<<<< HEAD
       setError("Please generate a verification code first.");
       return;
     }
@@ -98,17 +253,32 @@ export default function ForgotPassword({ mode = "forgot", accountLabel = "FoodSh
 
     if (enteredOtp.trim() !== otp) {
       setError("The verification code you entered is incorrect.");
+=======
+      setError("Please request an OTP first.");
+      return;
+    }
+
+    if (!otpVerified) {
+      setError("Please verify the OTP first.");
+>>>>>>> 713e2ec (Add New Feature in Forgot Password)
       return;
     }
 
     if (!newPassword || newPassword.length < 6) {
+<<<<<<< HEAD
       setError("New password must be at least 6 characters long.");
+=======
+      setError(
+        "New password must be at least 6 characters long."
+      );
+>>>>>>> 713e2ec (Add New Feature in Forgot Password)
       return;
     }
 
     setIsUpdating(true);
 
     try {
+<<<<<<< HEAD
       const result = await emailApi.resetPassword({ email, password: newPassword });
       setSuccess(result.message || "Password updated successfully. You can now sign in with your new password.");
       setEmail("");
@@ -119,6 +289,33 @@ export default function ForgotPassword({ mode = "forgot", accountLabel = "FoodSh
       setShowPassword(false);
     } catch (requestError) {
       setError(requestError.message || "Unable to update password right now.");
+=======
+      const result =
+        await authApi.resetPassword({
+          email: email.trim(),
+          otp: otp,
+          newPassword: newPassword
+        });
+
+      setSuccess(
+        result.message ||
+          "Password updated successfully. You can now sign in."
+      );
+
+      setEmail("");
+      setOtp("");
+      setNewPassword("");
+
+      setOtpSent(false);
+      setOtpVerified(false);
+      setShowPassword(false);
+
+    } catch (requestError) {
+      setError(
+        requestError.message ||
+          "Unable to update password."
+      );
+>>>>>>> 713e2ec (Add New Feature in Forgot Password)
     } finally {
       setIsUpdating(false);
     }
@@ -127,6 +324,7 @@ export default function ForgotPassword({ mode = "forgot", accountLabel = "FoodSh
   return (
     <main className="auth-page">
       <div className="auth-shell auth-shell-compact">
+<<<<<<< HEAD
         <aside className="auth-visual auth-visual-alt">
           <div className="auth-visual-badge">Secure access</div>
           <p className="eyebrow eyebrow-light">Account recovery</p>
@@ -153,16 +351,97 @@ export default function ForgotPassword({ mode = "forgot", accountLabel = "FoodSh
             <form className="auth-form auth-form-compact" onSubmit={handleSendOtp}>
               <label>
                 Email address
+=======
+
+        <aside className="auth-visual auth-visual-alt">
+
+          <div className="auth-visual-badge">
+            Secure access
+          </div>
+
+          <p className="eyebrow eyebrow-light">
+            Account recovery
+          </p>
+
+          <h1>
+            Reset your password safely.
+          </h1>
+
+          <p className="auth-visual-copy">
+            Enter your email to receive a
+            verification code, verify your OTP,
+            and create a new password.
+          </p>
+
+          <ul className="auth-feature-list">
+            <li>Email OTP verification</li>
+            <li>Secure password reset</li>
+            <li>Quick account recovery</li>
+          </ul>
+
+        </aside>
+
+        <section className="auth-form-panel auth-panel-compact">
+
+          <p className="eyebrow">
+            {mode === "reset"
+              ? "Set new password"
+              : "Forgot password"}
+          </p>
+
+          <h2>
+            {!otpSent
+              ? "Recover account"
+              : !otpVerified
+                ? "Verify OTP"
+                : "Reset Password"}
+          </h2>
+
+          <p className="auth-intro">
+
+            {!otpSent &&
+              "Enter the email linked to your FoodShare account."}
+
+            {otpSent &&
+              !otpVerified &&
+              `Enter the 6-digit OTP sent to ${email}.`}
+
+            {otpVerified &&
+              "OTP verified. Enter your new password."}
+
+          </p>
+
+          {/* ================================
+              STEP 1 - EMAIL
+          ================================= */}
+
+          {!otpSent && (
+            <form
+              className="auth-form auth-form-compact"
+              onSubmit={handleSendOtp}
+            >
+
+              <label>
+                Email address
+
+>>>>>>> 713e2ec (Add New Feature in Forgot Password)
                 <input
                   className="input"
                   type="email"
                   required
                   value={email}
+<<<<<<< HEAD
                   onChange={(event) => setEmail(event.target.value)}
+=======
+                  onChange={(event) =>
+                    setEmail(event.target.value)
+                  }
+>>>>>>> 713e2ec (Add New Feature in Forgot Password)
                   placeholder="name@example.com"
                 />
               </label>
 
+<<<<<<< HEAD
               {error && <p className="form-error" role="alert">{error}</p>}
               {success && <p className="form-success" role="status">{success}</p>}
 
@@ -206,18 +485,88 @@ export default function ForgotPassword({ mode = "forgot", accountLabel = "FoodSh
 
               <label>
                 Enter OTP
+=======
+              {error && (
+                <p
+                  className="form-error"
+                  role="alert"
+                >
+                  {error}
+                </p>
+              )}
+
+              {success && (
+                <p
+                  className="form-success"
+                  role="status"
+                >
+                  {success}
+                </p>
+              )}
+
+              <button
+                className="btn btn-primary btn-block"
+                type="submit"
+                disabled={isSending}
+              >
+                {isSending
+                  ? "Sending OTP..."
+                  : "Send OTP"}
+              </button>
+
+            </form>
+          )}
+
+          {/* ================================
+              STEP 2 - VERIFY OTP
+          ================================= */}
+
+          {otpSent && !otpVerified && (
+            <form
+              className="auth-form auth-form-compact"
+              onSubmit={handleVerifyOtp}
+            >
+
+              <label>
+                Email address
+
+                <input
+                  className="input"
+                  type="email"
+                  value={email}
+                  disabled
+                />
+              </label>
+
+              <label>
+                Enter OTP
+
+>>>>>>> 713e2ec (Add New Feature in Forgot Password)
                 <input
                   className="input"
                   type="text"
                   inputMode="numeric"
                   maxLength="6"
                   required
+<<<<<<< HEAD
                   value={enteredOtp}
                   onChange={(event) => setEnteredOtp(event.target.value.replace(/\D/g, ""))}
+=======
+                  value={otp}
+                  onChange={(event) =>
+                    setOtp(
+                      event.target.value.replace(
+                        /\D/g,
+                        ""
+                      )
+                    )
+                  }
+>>>>>>> 713e2ec (Add New Feature in Forgot Password)
                   placeholder="Enter 6-digit OTP"
                 />
               </label>
 
+<<<<<<< HEAD
               <label>
                 New password
                 <PasswordInput
@@ -228,11 +577,41 @@ export default function ForgotPassword({ mode = "forgot", accountLabel = "FoodSh
                   onToggle={() => setShowPassword((value) => !value)}
                 />
               </label>
+=======
+              {error && (
+                <p
+                  className="form-error"
+                  role="alert"
+                >
+                  {error}
+                </p>
+              )}
+
+              {success && (
+                <p
+                  className="form-success"
+                  role="status"
+                >
+                  {success}
+                </p>
+              )}
+
+              <button
+                className="btn btn-primary btn-block"
+                type="submit"
+                disabled={isVerifying}
+              >
+                {isVerifying
+                  ? "Verifying..."
+                  : "Verify OTP"}
+              </button>
+>>>>>>> 713e2ec (Add New Feature in Forgot Password)
 
               <button
                 type="button"
                 className="btn btn-ghost btn-block"
                 onClick={() => {
+<<<<<<< HEAD
                   const newCode = generateOtp();
                   setOtp(newCode);
                   setEnteredOtp("");
@@ -249,14 +628,106 @@ export default function ForgotPassword({ mode = "forgot", accountLabel = "FoodSh
               <button className="btn btn-primary btn-block" type="submit" disabled={isUpdating}>
                 {isUpdating ? "Updating password..." : "Update password"}
               </button>
+=======
+                  setOtpSent(false);
+                  setOtp("");
+                  setError("");
+                  setSuccess("");
+                }}
+              >
+                Change Email
+              </button>
+
+            </form>
+          )}
+
+          {/* ================================
+              STEP 3 - NEW PASSWORD
+          ================================= */}
+
+          {otpSent && otpVerified && (
+            <form
+              className="auth-form auth-form-compact"
+              onSubmit={handleResetPassword}
+            >
+
+              <label>
+                New password
+
+                <PasswordInput
+                  value={newPassword}
+                  onChange={(event) =>
+                    setNewPassword(
+                      event.target.value
+                    )
+                  }
+                  placeholder="Enter new password"
+                  showPassword={showPassword}
+                  onToggle={() =>
+                    setShowPassword(
+                      (value) => !value
+                    )
+                  }
+                />
+              </label>
+
+              {error && (
+                <p
+                  className="form-error"
+                  role="alert"
+                >
+                  {error}
+                </p>
+              )}
+
+              {success && (
+                <p
+                  className="form-success"
+                  role="status"
+                >
+                  {success}
+                </p>
+              )}
+
+              <button
+                className="btn btn-primary btn-block"
+                type="submit"
+                disabled={isUpdating}
+              >
+                {isUpdating
+                  ? "Updating password..."
+                  : "Update password"}
+              </button>
+
+>>>>>>> 713e2ec (Add New Feature in Forgot Password)
             </form>
           )}
 
           <div className="auth-footer-links">
+<<<<<<< HEAD
             <p>Remembered your password? <a href={loginPath}>Back to sign in</a></p>
           </div>
+=======
+
+            <p>
+              Remembered your password?{" "}
+              <a href={loginPath}>
+                Back to sign in
+              </a>
+            </p>
+
+          </div>
+
+>>>>>>> 713e2ec (Add New Feature in Forgot Password)
         </section>
       </div>
     </main>
   );
 }
+<<<<<<< HEAD
+=======
+// 2. ResetPassword.jsx
+
+// તમારો existing code:
+
+>>>>>>> 713e2ec (Add New Feature in Forgot Password)

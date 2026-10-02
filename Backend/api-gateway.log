@@ -35,6 +35,7 @@
 
  :: Spring Boot ::                (v4.1.0)
 
+<<<<<<< HEAD
 2026-09-29T11:21:07.267+05:30  INFO 6206 --- [api-gateway] [           main] c.f.api_gateway.ApiGatewayApplication    : Starting ApiGatewayApplication using Java 21.0.12 with PID 6206 (/Users/ravipandit/Development/MCA/Spring-Boot-Project/FoodShare_Fronted /Backend/api-gateway/target/classes started by ravipandit in /Users/ravipandit/Development/MCA/Spring-Boot-Project/FoodShare_Fronted /Backend/api-gateway)
 2026-09-29T11:21:07.269+05:30  INFO 6206 --- [api-gateway] [           main] c.f.api_gateway.ApiGatewayApplication    : No active profile set, falling back to 1 default profile: "default"
 2026-09-29T11:21:08.226+05:30  INFO 6206 --- [api-gateway] [           main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=34cad5e7-eb74-38de-8bfc-88d784dec53d
@@ -556,3 +557,48 @@ com.netflix.discovery.shared.transport.TransportException: Cannot execute reques
 	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
 
 2026-09-29T12:54:15.428+05:30  INFO 6206 --- [api-gateway] [ionShutdownHook] com.netflix.discovery.DiscoveryClient    : Completed shut down of DiscoveryClient
+=======
+2026-10-02T18:52:13.647+05:30  INFO 51027 --- [api-gateway] [           main] c.f.api_gateway.ApiGatewayApplication    : Starting ApiGatewayApplication using Java 21.0.12 with PID 51027 (/Users/ravipandit/Development/MCA/Spring-Boot-Project/FoodShare_Fronted /Backend/api-gateway/target/classes started by ravipandit in /Users/ravipandit/Development/MCA/Spring-Boot-Project/FoodShare_Fronted /Backend/api-gateway)
+2026-10-02T18:52:13.649+05:30  INFO 51027 --- [api-gateway] [           main] c.f.api_gateway.ApiGatewayApplication    : No active profile set, falling back to 1 default profile: "default"
+2026-10-02T18:52:14.609+05:30  INFO 51027 --- [api-gateway] [           main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=34cad5e7-eb74-38de-8bfc-88d784dec53d
+2026-10-02T18:52:14.827+05:30  INFO 51027 --- [api-gateway] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8079 (http)
+2026-10-02T18:52:14.837+05:30  INFO 51027 --- [api-gateway] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-10-02T18:52:14.837+05:30  INFO 51027 --- [api-gateway] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.22]
+2026-10-02T18:52:14.870+05:30  INFO 51027 --- [api-gateway] [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 1154 ms
+2026-10-02T18:52:15.741+05:30  INFO 51027 --- [api-gateway] [           main] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestClient.
+2026-10-02T18:52:15.901+05:30  WARN 51027 --- [api-gateway] [           main] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2026-10-02T18:52:15.909+05:30  INFO 51027 --- [api-gateway] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2026-10-02T18:52:15.945+05:30  INFO 51027 --- [api-gateway] [           main] o.s.c.n.eureka.InstanceInfoFactory       : Setting initial instance status as: STARTING
+2026-10-02T18:52:15.961+05:30  INFO 51027 --- [api-gateway] [           main] com.netflix.discovery.DiscoveryClient    : Initializing Eureka in region us-east-1
+2026-10-02T18:52:15.963+05:30  INFO 51027 --- [api-gateway] [           main] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-10-02T18:52:15.968+05:30  INFO 51027 --- [api-gateway] [           main] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
+2026-10-02T18:52:15.969+05:30  INFO 51027 --- [api-gateway] [           main] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
+2026-10-02T18:52:15.969+05:30  INFO 51027 --- [api-gateway] [           main] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
+2026-10-02T18:52:15.969+05:30  INFO 51027 --- [api-gateway] [           main] com.netflix.discovery.DiscoveryClient    : Application is null : false
+2026-10-02T18:52:15.969+05:30  INFO 51027 --- [api-gateway] [           main] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
+2026-10-02T18:52:15.969+05:30  INFO 51027 --- [api-gateway] [           main] com.netflix.discovery.DiscoveryClient    : Application version is -1: true
+2026-10-02T18:52:15.969+05:30  INFO 51027 --- [api-gateway] [           main] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
+2026-10-02T18:52:16.265+05:30  INFO 51027 --- [api-gateway] [           main] com.netflix.discovery.DiscoveryClient    : The response status is 200
+2026-10-02T18:52:16.266+05:30  INFO 51027 --- [api-gateway] [           main] com.netflix.discovery.DiscoveryClient    : Starting heartbeat executor: renew interval is: 30
+2026-10-02T18:52:16.268+05:30  INFO 51027 --- [api-gateway] [           main] c.n.discovery.InstanceInfoReplicator     : InstanceInfoReplicator onDemand update allowed rate per min is 4
+2026-10-02T18:52:16.271+05:30  INFO 51027 --- [api-gateway] [           main] com.netflix.discovery.DiscoveryClient    : Discovery Client initialized at timestamp 1790947336270 with initial instances count: 0
+2026-10-02T18:52:16.272+05:30  INFO 51027 --- [api-gateway] [           main] o.s.c.n.e.s.EurekaServiceRegistry        : Registering application API-GATEWAY with eureka with status UP
+2026-10-02T18:52:16.273+05:30  INFO 51027 --- [api-gateway] [           main] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1790947336273, current=UP, previous=STARTING]
+2026-10-02T18:52:16.274+05:30  INFO 51027 --- [api-gateway] [foReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_API-GATEWAY/10.143.180.246:api-gateway:8079: registering service...
+2026-10-02T18:52:16.299+05:30  INFO 51027 --- [api-gateway] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8079 (http) with context path '/'
+2026-10-02T18:52:16.299+05:30  INFO 51027 --- [api-gateway] [           main] .s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 8079
+2026-10-02T18:52:16.315+05:30  INFO 51027 --- [api-gateway] [           main] c.f.api_gateway.ApiGatewayApplication    : Started ApiGatewayApplication in 3.239 seconds (process running for 3.768)
+2026-10-02T18:52:16.412+05:30  INFO 51027 --- [api-gateway] [foReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_API-GATEWAY/10.143.180.246:api-gateway:8079 - registration status: 204
+2026-10-02T18:52:46.273+05:30  INFO 51027 --- [api-gateway] [reshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
+2026-10-02T18:52:46.276+05:30  INFO 51027 --- [api-gateway] [reshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
+2026-10-02T18:52:46.276+05:30  INFO 51027 --- [api-gateway] [reshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
+2026-10-02T18:52:46.276+05:30  INFO 51027 --- [api-gateway] [reshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Application is null : false
+2026-10-02T18:52:46.276+05:30  INFO 51027 --- [api-gateway] [reshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
+2026-10-02T18:52:46.276+05:30  INFO 51027 --- [api-gateway] [reshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Application version is -1: false
+2026-10-02T18:52:46.277+05:30  INFO 51027 --- [api-gateway] [reshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
+2026-10-02T18:52:46.315+05:30  INFO 51027 --- [api-gateway] [reshExecutor-%d] com.netflix.discovery.DiscoveryClient    : The response status is 200
+2026-10-02T18:52:51.684+05:30  INFO 51027 --- [api-gateway] [nio-8079-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-10-02T18:52:51.684+05:30  INFO 51027 --- [api-gateway] [nio-8079-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-10-02T18:52:51.687+05:30  INFO 51027 --- [api-gateway] [nio-8079-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
+2026-10-02T18:57:15.975+05:30  INFO 51027 --- [api-gateway] [rap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+>>>>>>> 713e2ec (Add New Feature in Forgot Password)

@@ -35,6 +35,7 @@
 
  :: Spring Boot ::                (v4.1.0)
 
+<<<<<<< HEAD
 2026-09-29T11:20:56.056+05:30  INFO 5478 --- [service-registry] [           main] c.f.s.ServiceRegistryApplication         : Starting ServiceRegistryApplication using Java 21.0.12 with PID 5478 (/Users/ravipandit/Development/MCA/Spring-Boot-Project/FoodShare_Fronted /Backend/service-registry/target/classes started by ravipandit in /Users/ravipandit/Development/MCA/Spring-Boot-Project/FoodShare_Fronted /Backend/service-registry)
 2026-09-29T11:20:56.057+05:30  INFO 5478 --- [service-registry] [           main] c.f.s.ServiceRegistryApplication         : No active profile set, falling back to 1 default profile: "default"
 2026-09-29T11:20:56.449+05:30  INFO 5478 --- [service-registry] [           main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=29ae514e-1145-386b-a836-d233a57a7f44
@@ -196,3 +197,52 @@
 2026-09-29T12:54:14.858+05:30  INFO 5478 --- [service-registry] [ionShutdownHook] c.n.eureka.DefaultEurekaServerContext    : Shut down
 2026-09-29T12:54:15.004+05:30  INFO 5478 --- [service-registry] [ionShutdownHook] com.netflix.discovery.DiscoveryClient    : Shutting down DiscoveryClient ...
 2026-09-29T12:54:15.005+05:30  INFO 5478 --- [service-registry] [ionShutdownHook] com.netflix.discovery.DiscoveryClient    : Completed shut down of DiscoveryClient
+=======
+2026-10-02T18:52:02.326+05:30  INFO 50301 --- [service-registry] [           main] c.f.s.ServiceRegistryApplication         : Starting ServiceRegistryApplication using Java 21.0.12 with PID 50301 (/Users/ravipandit/Development/MCA/Spring-Boot-Project/FoodShare_Fronted /Backend/service-registry/target/classes started by ravipandit in /Users/ravipandit/Development/MCA/Spring-Boot-Project/FoodShare_Fronted /Backend/service-registry)
+2026-10-02T18:52:02.327+05:30  INFO 50301 --- [service-registry] [           main] c.f.s.ServiceRegistryApplication         : No active profile set, falling back to 1 default profile: "default"
+2026-10-02T18:52:02.733+05:30  INFO 50301 --- [service-registry] [           main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=29ae514e-1145-386b-a836-d233a57a7f44
+2026-10-02T18:52:02.854+05:30  INFO 50301 --- [service-registry] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8761 (http)
+2026-10-02T18:52:02.862+05:30  INFO 50301 --- [service-registry] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-10-02T18:52:02.862+05:30  INFO 50301 --- [service-registry] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.22]
+2026-10-02T18:52:02.893+05:30  INFO 50301 --- [service-registry] [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 545 ms
+2026-10-02T18:52:03.318+05:30  INFO 50301 --- [service-registry] [           main] c.n.d.provider.DiscoveryJerseyProvider   : Using JSON encoding codec LegacyJacksonJson
+2026-10-02T18:52:03.318+05:30  INFO 50301 --- [service-registry] [           main] c.n.d.provider.DiscoveryJerseyProvider   : Using JSON decoding codec LegacyJacksonJson
+2026-10-02T18:52:03.410+05:30  INFO 50301 --- [service-registry] [           main] c.n.d.provider.DiscoveryJerseyProvider   : Using XML encoding codec XStreamXml
+2026-10-02T18:52:03.410+05:30  INFO 50301 --- [service-registry] [           main] c.n.d.provider.DiscoveryJerseyProvider   : Using XML decoding codec XStreamXml
+2026-10-02T18:52:03.481+05:30  INFO 50301 --- [service-registry] [           main] o.s.v.b.OptionalValidatorFactoryBean     : Failed to set up a Bean Validation provider: jakarta.validation.NoProviderFoundException: Unable to create a Configuration, because no Jakarta Validation provider could be found. Add a provider like Hibernate Validator (RI) to your classpath.
+2026-10-02T18:52:03.758+05:30  WARN 50301 --- [service-registry] [           main] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2026-10-02T18:52:03.766+05:30  INFO 50301 --- [service-registry] [           main] o.s.c.n.eureka.InstanceInfoFactory       : Setting initial instance status as: STARTING
+2026-10-02T18:52:03.775+05:30  INFO 50301 --- [service-registry] [           main] com.netflix.discovery.DiscoveryClient    : Initializing Eureka in region us-east-1
+2026-10-02T18:52:03.775+05:30  INFO 50301 --- [service-registry] [           main] com.netflix.discovery.DiscoveryClient    : Client configured to neither register nor query for data.
+2026-10-02T18:52:03.776+05:30  INFO 50301 --- [service-registry] [           main] com.netflix.discovery.DiscoveryClient    : Discovery Client initialized at timestamp 1790947323775 with initial instances count: 0
+2026-10-02T18:52:03.793+05:30  INFO 50301 --- [service-registry] [           main] c.n.eureka.DefaultEurekaServerContext    : Initializing ...
+2026-10-02T18:52:03.794+05:30  WARN 50301 --- [service-registry] [           main] c.n.eureka.cluster.PeerEurekaNodes       : The replica size seems to be empty. Check the route 53 DNS Registry
+2026-10-02T18:52:03.798+05:30  INFO 50301 --- [service-registry] [           main] c.n.e.registry.AbstractInstanceRegistry  : Finished initializing remote region registries. All known remote regions: []
+2026-10-02T18:52:03.798+05:30  INFO 50301 --- [service-registry] [           main] c.n.eureka.DefaultEurekaServerContext    : Initialized
+2026-10-02T18:52:03.802+05:30  INFO 50301 --- [service-registry] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2026-10-02T18:52:03.827+05:30  INFO 50301 --- [service-registry] [           main] o.s.c.n.e.s.EurekaServiceRegistry        : Registering application SERVICE-REGISTRY with eureka with status UP
+2026-10-02T18:52:03.832+05:30  INFO 50301 --- [service-registry] [       Thread-9] o.s.c.n.e.server.EurekaServerBootstrap   : isAws returned false
+2026-10-02T18:52:03.832+05:30  INFO 50301 --- [service-registry] [       Thread-9] o.s.c.n.e.server.EurekaServerBootstrap   : Initialized server context
+2026-10-02T18:52:03.832+05:30  INFO 50301 --- [service-registry] [       Thread-9] c.n.e.r.PeerAwareInstanceRegistryImpl    : Got 1 instances from neighboring DS node
+2026-10-02T18:52:03.832+05:30  INFO 50301 --- [service-registry] [       Thread-9] c.n.e.r.PeerAwareInstanceRegistryImpl    : Renew threshold is: 1
+2026-10-02T18:52:03.832+05:30  INFO 50301 --- [service-registry] [       Thread-9] c.n.e.r.PeerAwareInstanceRegistryImpl    : Changing status to UP
+2026-10-02T18:52:03.833+05:30  INFO 50301 --- [service-registry] [       Thread-9] e.s.EurekaServerInitializerConfiguration : Started Eureka Server
+2026-10-02T18:52:03.842+05:30  INFO 50301 --- [service-registry] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8761 (http) with context path '/'
+2026-10-02T18:52:03.843+05:30  INFO 50301 --- [service-registry] [           main] .s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 8761
+2026-10-02T18:52:03.849+05:30  INFO 50301 --- [service-registry] [           main] c.f.s.ServiceRegistryApplication         : Started ServiceRegistryApplication in 1.71 seconds (process running for 1.965)
+2026-10-02T18:52:16.084+05:30  INFO 50301 --- [service-registry] [nio-8761-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-10-02T18:52:16.085+05:30  INFO 50301 --- [service-registry] [nio-8761-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-10-02T18:52:16.088+05:30  INFO 50301 --- [service-registry] [nio-8761-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
+2026-10-02T18:52:16.394+05:30  INFO 50301 --- [service-registry] [nio-8761-exec-2] c.n.e.registry.AbstractInstanceRegistry  : Registered instance API-GATEWAY/10.143.180.246:api-gateway:8079 with status UP (replication=false)
+2026-10-02T18:52:18.329+05:30  INFO 50301 --- [service-registry] [nio-8761-exec-4] c.n.e.registry.AbstractInstanceRegistry  : Registered instance REQUEST-SERVICE/10.143.180.246:request-service:8085 with status UP (replication=false)
+2026-10-02T18:52:18.754+05:30  INFO 50301 --- [service-registry] [nio-8761-exec-7] c.n.e.registry.AbstractInstanceRegistry  : Registered instance USER-SERVICE/10.143.180.246:user-service:8082 with status UP (replication=false)
+2026-10-02T18:52:18.812+05:30  INFO 50301 --- [service-registry] [nio-8761-exec-8] c.n.e.registry.AbstractInstanceRegistry  : Registered instance FOOD-SERVICE/10.143.180.246:food-service:8083 with status UP (replication=false)
+2026-10-02T18:52:18.913+05:30  INFO 50301 --- [service-registry] [io-8761-exec-10] c.n.e.registry.AbstractInstanceRegistry  : Registered instance AUTH-SERVICE/10.143.180.246:auth-service:8084 with status UP (replication=false)
+2026-10-02T18:53:03.837+05:30  INFO 50301 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 0ms
+2026-10-02T18:54:03.847+05:30  INFO 50301 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 6ms
+2026-10-02T18:55:03.846+05:30  INFO 50301 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 2ms
+2026-10-02T18:56:03.851+05:30  INFO 50301 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 3ms
+2026-10-02T18:57:03.856+05:30  INFO 50301 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 5ms
+2026-10-02T18:58:03.859+05:30  INFO 50301 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 3ms
+2026-10-02T18:59:03.860+05:30  INFO 50301 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 2ms
+>>>>>>> 713e2ec (Add New Feature in Forgot Password)

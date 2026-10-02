@@ -54,6 +54,17 @@ export const authApi = {
     syncLegacyDashboardSession(response);
     return response;
   },
+<<<<<<< HEAD
+=======
+  // Forgot Password
+    async forgotPassword(email) { const response = await apiRequest( "/auth/forgot-password", 
+      { method: "POST", body: JSON.stringify({ email: email }) } ); if (!response.success) { throw new Error( response.message || "Unable to send OTP" ); } return response; },
+
+  // Verify OTP
+  async verifyOtp(email, otp) { const response = await apiRequest( "/auth/verify-otp", { method: "POST", body: JSON.stringify({ email: email, otp: otp }) } ); if (!response.success) { throw new Error( response.message || "Invalid OTP" ); } return response; },
+  // Reset Password
+  async resetPassword({ email, otp, newPassword }) { const response = await apiRequest( "/auth/reset-password", { method: "POST", body: JSON.stringify({ email: email, otp: otp, newPassword: newPassword }) } ); if (!response.success) { throw new Error( response.message || "Password reset failed" ); } return response; },
+>>>>>>> 713e2ec (Add New Feature in Forgot Password)
   logout() {
     setAccessToken(null);
   }

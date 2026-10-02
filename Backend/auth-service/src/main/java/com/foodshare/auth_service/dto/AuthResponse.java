@@ -23,4 +23,11 @@ public class AuthResponse {
 
     private String role;
 
+<<<<<<< HEAD
+=======
+    private String otp;
+
+    private boolean success;
+
+>>>>>>> 713e2ec (Add New Feature in Forgot Password)
 }

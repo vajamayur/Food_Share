@@ -10,4 +10,21 @@ chmod +x user-service/mvnw
 chmod +x food-service/mvnw
 
 You can verify:
+<<<<<<< HEAD
 ls -l service-registry/mvnw
+=======
+ls -l service-registry/mvnw
+
+--- STMP Set Variable
+./stop-all.sh
+export MAIL_HOST=smtp.gmail.com
+export MAIL_PORT=587
+export MAIL_USERNAME='vmayur892@gmail.com'
+read -s 'MAIL_PASSWORD?Google App Password: '; echo
+export MAIL_PASSWORD
+./start-all.sh
+
+
+--- FoodShare App Password
+dvfr znqd vxpo qgwr
+>>>>>>> 713e2ec (Add New Feature in Forgot Password)

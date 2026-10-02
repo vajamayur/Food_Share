@@ -6,8 +6,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.foodshare.auth_service.dto.AuthResponse;
+<<<<<<< HEAD
 import com.foodshare.auth_service.dto.LoginRequest;
 import com.foodshare.auth_service.dto.RegisterRequest;
+=======
+import com.foodshare.auth_service.dto.ForgotPasswordRequest;
+import com.foodshare.auth_service.dto.LoginRequest;
+import com.foodshare.auth_service.dto.RegisterRequest;
+import com.foodshare.auth_service.dto.ResetPasswordRequest;
+import com.foodshare.auth_service.dto.VerifyOtpRequest;
+>>>>>>> 713e2ec (Add New Feature in Forgot Password)
 import com.foodshare.auth_service.service.AuthService;
 
 import jakarta.validation.Valid;
@@ -45,4 +53,43 @@ public class AuthController {
 
         return authService.login(request);
     }
+<<<<<<< HEAD
+=======
+
+    // =========================================
+    // FORGOT PASSWORD
+    // =========================================
+
+    @PostMapping("/forgot-password")
+    public AuthResponse forgotPassword(
+            @Valid
+            @RequestBody ForgotPasswordRequest request) {
+
+        return authService.forgotPassword(request);
+    }
+
+    // =========================================
+    // VERIFY OTP
+    // =========================================
+
+    @PostMapping("/verify-otp")
+    public AuthResponse verifyOtp(
+            @Valid
+            @RequestBody VerifyOtpRequest request) {
+
+        return authService.verifyOtp(request);
+    }
+
+    // =========================================
+    // RESET PASSWORD
+    // =========================================
+
+    @PostMapping("/reset-password")
+    public AuthResponse resetPassword(
+            @Valid
+            @RequestBody ResetPasswordRequest request) {
+
+        return authService.resetPassword(request);
+    }
+>>>>>>> 713e2ec (Add New Feature in Forgot Password)
 }

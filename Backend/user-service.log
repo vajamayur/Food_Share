@@ -35,6 +35,7 @@
 
  :: Spring Boot ::                (v4.1.0)
 
+<<<<<<< HEAD
 2026-09-29T11:21:08.690+05:30  INFO 6211 --- [user-service] [  restartedMain] c.f.user_service.UserServiceApplication  : Starting UserServiceApplication using Java 21.0.12 with PID 6211 (/Users/ravipandit/Development/MCA/Spring-Boot-Project/FoodShare_Fronted /Backend/user-service/target/classes started by ravipandit in /Users/ravipandit/Development/MCA/Spring-Boot-Project/FoodShare_Fronted /Backend/user-service)
 2026-09-29T11:21:08.695+05:30  INFO 6211 --- [user-service] [  restartedMain] c.f.user_service.UserServiceApplication  : No active profile set, falling back to 1 default profile: "default"
 2026-09-29T11:21:08.786+05:30  INFO 6211 --- [user-service] [  restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
@@ -55,6 +56,28 @@
 2026-09-29T11:21:11.433+05:30  WARN 6211 --- [user-service] [  restartedMain] org.hibernate.orm.core                   : HHH000511: The 5.5.5 version for [org.hibernate.dialect.MySQLDialect] is no longer supported, hence certain features may not work properly.The minimum supported version is 8.0.0. Check the community dialects project for available legacy versions.
 2026-09-29T11:21:11.436+05:30  WARN 6211 --- [user-service] [  restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
 2026-09-29T11:21:11.448+05:30  INFO 6211 --- [user-service] [  restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+=======
+2026-10-02T18:52:14.877+05:30  INFO 51031 --- [user-service] [  restartedMain] c.f.user_service.UserServiceApplication  : Starting UserServiceApplication using Java 21.0.12 with PID 51031 (/Users/ravipandit/Development/MCA/Spring-Boot-Project/FoodShare_Fronted /Backend/user-service/target/classes started by ravipandit in /Users/ravipandit/Development/MCA/Spring-Boot-Project/FoodShare_Fronted /Backend/user-service)
+2026-10-02T18:52:14.886+05:30  INFO 51031 --- [user-service] [  restartedMain] c.f.user_service.UserServiceApplication  : No active profile set, falling back to 1 default profile: "default"
+2026-10-02T18:52:14.956+05:30  INFO 51031 --- [user-service] [  restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-10-02T18:52:14.957+05:30  INFO 51031 --- [user-service] [  restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-10-02T18:52:15.704+05:30  INFO 51031 --- [user-service] [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-10-02T18:52:15.833+05:30  INFO 51031 --- [user-service] [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 124 ms. Found 1 JPA repository interface.
+2026-10-02T18:52:16.018+05:30  INFO 51031 --- [user-service] [  restartedMain] o.s.cloud.context.scope.GenericScope     : BeanFactory id=d5d14894-599e-31ff-ac6b-69f9a8461ea5
+2026-10-02T18:52:16.467+05:30  INFO 51031 --- [user-service] [  restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8082 (http)
+2026-10-02T18:52:16.486+05:30  INFO 51031 --- [user-service] [  restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-10-02T18:52:16.486+05:30  INFO 51031 --- [user-service] [  restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.22]
+2026-10-02T18:52:16.509+05:30  INFO 51031 --- [user-service] [  restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 1552 ms
+2026-10-02T18:52:16.610+05:30  INFO 51031 --- [user-service] [  restartedMain] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-10-02T18:52:16.648+05:30  INFO 51031 --- [user-service] [  restartedMain] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.4.1.Final
+2026-10-02T18:52:16.924+05:30  INFO 51031 --- [user-service] [  restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-10-02T18:52:16.947+05:30  INFO 51031 --- [user-service] [  restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-10-02T18:52:17.046+05:30  INFO 51031 --- [user-service] [  restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@7f5c6f3c
+2026-10-02T18:52:17.047+05:30  INFO 51031 --- [user-service] [  restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-10-02T18:52:17.086+05:30  WARN 51031 --- [user-service] [  restartedMain] org.hibernate.orm.core                   : HHH000511: The 5.5.5 version for [org.hibernate.dialect.MySQLDialect] is no longer supported, hence certain features may not work properly.The minimum supported version is 8.0.0. Check the community dialects project for available legacy versions.
+2026-10-02T18:52:17.088+05:30  WARN 51031 --- [user-service] [  restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-10-02T18:52:17.101+05:30  INFO 51031 --- [user-service] [  restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+>>>>>>> 713e2ec (Add New Feature in Forgot Password)
 	Database JDBC URL [jdbc:mysql://localhost:3306/foodshare_user_db]
 	Database driver: MySQL Connector/J
 	Database dialect: MySQLDialect
@@ -66,6 +89,7 @@
 	Pool: DataSourceConnectionProvider
 	Minimum pool size: undefined/unknown
 	Maximum pool size: undefined/unknown
+<<<<<<< HEAD
 2026-09-29T11:21:12.173+05:30  INFO 6211 --- [user-service] [  restartedMain] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
 2026-09-29T11:21:12.268+05:30  INFO 6211 --- [user-service] [  restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
 2026-09-29T11:21:12.314+05:30  INFO 6211 --- [user-service] [  restartedMain] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
@@ -542,3 +566,112 @@ com.netflix.discovery.shared.transport.TransportException: Cannot execute reques
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[na:na]
 	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
 
+=======
+2026-10-02T18:52:17.772+05:30  INFO 51031 --- [user-service] [  restartedMain] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-10-02T18:52:17.802+05:30  INFO 51031 --- [user-service] [  restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-10-02T18:52:17.846+05:30  INFO 51031 --- [user-service] [  restartedMain] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-10-02T18:52:18.077+05:30  WARN 51031 --- [user-service] [  restartedMain] .s.a.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 325ad33b-50f3-4731-af1c-1e4def4f9451
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-10-02T18:52:18.082+05:30  INFO 51031 --- [user-service] [  restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2026-10-02T18:52:18.444+05:30  INFO 51031 --- [user-service] [  restartedMain] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestClient.
+2026-10-02T18:52:18.465+05:30  WARN 51031 --- [user-service] [  restartedMain] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2026-10-02T18:52:18.484+05:30  INFO 51031 --- [user-service] [  restartedMain] o.s.c.n.eureka.InstanceInfoFactory       : Setting initial instance status as: STARTING
+2026-10-02T18:52:18.503+05:30  INFO 51031 --- [user-service] [  restartedMain] com.netflix.discovery.DiscoveryClient    : Initializing Eureka in region us-east-1
+2026-10-02T18:52:18.505+05:30  INFO 51031 --- [user-service] [  restartedMain] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-10-02T18:52:18.509+05:30  INFO 51031 --- [user-service] [  restartedMain] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
+2026-10-02T18:52:18.509+05:30  INFO 51031 --- [user-service] [  restartedMain] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
+2026-10-02T18:52:18.509+05:30  INFO 51031 --- [user-service] [  restartedMain] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
+2026-10-02T18:52:18.509+05:30  INFO 51031 --- [user-service] [  restartedMain] com.netflix.discovery.DiscoveryClient    : Application is null : false
+2026-10-02T18:52:18.509+05:30  INFO 51031 --- [user-service] [  restartedMain] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
+2026-10-02T18:52:18.509+05:30  INFO 51031 --- [user-service] [  restartedMain] com.netflix.discovery.DiscoveryClient    : Application version is -1: true
+2026-10-02T18:52:18.509+05:30  INFO 51031 --- [user-service] [  restartedMain] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
+2026-10-02T18:52:18.725+05:30  INFO 51031 --- [user-service] [  restartedMain] com.netflix.discovery.DiscoveryClient    : The response status is 200
+2026-10-02T18:52:18.726+05:30  INFO 51031 --- [user-service] [  restartedMain] com.netflix.discovery.DiscoveryClient    : Starting heartbeat executor: renew interval is: 30
+2026-10-02T18:52:18.727+05:30  INFO 51031 --- [user-service] [  restartedMain] c.n.discovery.InstanceInfoReplicator     : InstanceInfoReplicator onDemand update allowed rate per min is 4
+2026-10-02T18:52:18.728+05:30  INFO 51031 --- [user-service] [  restartedMain] com.netflix.discovery.DiscoveryClient    : Discovery Client initialized at timestamp 1790947338727 with initial instances count: 0
+2026-10-02T18:52:18.730+05:30  INFO 51031 --- [user-service] [  restartedMain] o.s.c.n.e.s.EurekaServiceRegistry        : Registering application USER-SERVICE with eureka with status UP
+2026-10-02T18:52:18.730+05:30  INFO 51031 --- [user-service] [  restartedMain] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1790947338730, current=UP, previous=STARTING]
+2026-10-02T18:52:18.731+05:30  INFO 51031 --- [user-service] [foReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_USER-SERVICE/10.143.180.246:user-service:8082: registering service...
+2026-10-02T18:52:18.742+05:30  INFO 51031 --- [user-service] [  restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8082 (http) with context path '/'
+2026-10-02T18:52:18.742+05:30  INFO 51031 --- [user-service] [  restartedMain] .s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 8082
+2026-10-02T18:52:18.749+05:30  INFO 51031 --- [user-service] [  restartedMain] c.f.user_service.UserServiceApplication  : Started UserServiceApplication in 4.244 seconds (process running for 4.726)
+2026-10-02T18:52:18.755+05:30  INFO 51031 --- [user-service] [foReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_USER-SERVICE/10.143.180.246:user-service:8082 - registration status: 204
+2026-10-02T18:52:48.728+05:30  INFO 51031 --- [user-service] [reshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
+2026-10-02T18:52:48.731+05:30  INFO 51031 --- [user-service] [reshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
+2026-10-02T18:52:48.731+05:30  INFO 51031 --- [user-service] [reshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
+2026-10-02T18:52:48.731+05:30  INFO 51031 --- [user-service] [reshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Application is null : false
+2026-10-02T18:52:48.731+05:30  INFO 51031 --- [user-service] [reshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
+2026-10-02T18:52:48.731+05:30  INFO 51031 --- [user-service] [reshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Application version is -1: false
+2026-10-02T18:52:48.731+05:30  INFO 51031 --- [user-service] [reshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
+2026-10-02T18:52:48.766+05:30  INFO 51031 --- [user-service] [reshExecutor-%d] com.netflix.discovery.DiscoveryClient    : The response status is 200
+2026-10-02T18:56:13.858+05:30  INFO 51031 --- [user-service] [nio-8082-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-10-02T18:56:13.859+05:30  INFO 51031 --- [user-service] [nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-10-02T18:56:13.868+05:30  INFO 51031 --- [user-service] [nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 9 ms
+2026-10-02T18:56:14.265+05:30 DEBUG 51031 --- [user-service] [nio-8082-exec-1] org.hibernate.SQL                        : 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.email=? 
+    limit
+        ?
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.email=? 
+    limit
+        ?
+2026-10-02T18:56:14.271+05:30 TRACE 51031 --- [user-service] [nio-8082-exec-1] org.hibernate.orm.jdbc.bind              : binding parameter (1:VARCHAR) <- [250160450061.gvp@gujaratvidyapith.org]
+2026-10-02T18:56:14.272+05:30 TRACE 51031 --- [user-service] [nio-8082-exec-1] org.hibernate.orm.jdbc.bind              : binding parameter (2:INTEGER) <- [1]
+2026-10-02T18:56:14.281+05:30 DEBUG 51031 --- [user-service] [nio-8082-exec-1] org.hibernate.SQL                        : 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.phone=? 
+    limit
+        ?
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.phone=? 
+    limit
+        ?
+2026-10-02T18:56:14.281+05:30 TRACE 51031 --- [user-service] [nio-8082-exec-1] org.hibernate.orm.jdbc.bind              : binding parameter (1:VARCHAR) <- [9000000018]
+2026-10-02T18:56:14.281+05:30 TRACE 51031 --- [user-service] [nio-8082-exec-1] org.hibernate.orm.jdbc.bind              : binding parameter (2:INTEGER) <- [1]
+2026-10-02T18:56:14.397+05:30 DEBUG 51031 --- [user-service] [nio-8082-exec-1] org.hibernate.SQL                        : 
+    insert 
+    into
+        users
+        (address, created_at, email, full_name, password, phone, role, updated_at) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        users
+        (address, created_at, email, full_name, password, phone, role, updated_at) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+2026-10-02T18:56:14.398+05:30 TRACE 51031 --- [user-service] [nio-8082-exec-1] org.hibernate.orm.jdbc.bind              : binding parameter (1:VARCHAR) <- [null]
+2026-10-02T18:56:14.398+05:30 TRACE 51031 --- [user-service] [nio-8082-exec-1] org.hibernate.orm.jdbc.bind              : binding parameter (2:TIMESTAMP) <- [2026-10-02T18:56:14.388501]
+2026-10-02T18:56:14.398+05:30 TRACE 51031 --- [user-service] [nio-8082-exec-1] org.hibernate.orm.jdbc.bind              : binding parameter (3:VARCHAR) <- [250160450061.gvp@gujaratvidyapith.org]
+2026-10-02T18:56:14.398+05:30 TRACE 51031 --- [user-service] [nio-8082-exec-1] org.hibernate.orm.jdbc.bind              : binding parameter (4:VARCHAR) <- [Vaja MP]
+2026-10-02T18:56:14.398+05:30 TRACE 51031 --- [user-service] [nio-8082-exec-1] org.hibernate.orm.jdbc.bind              : binding parameter (5:VARCHAR) <- [$2a$10$KWw/dh.5pKPdXAHbMkxcpON4xM3EkuogboKOAOgHjm0Uhn/RPZy7q]
+2026-10-02T18:56:14.398+05:30 TRACE 51031 --- [user-service] [nio-8082-exec-1] org.hibernate.orm.jdbc.bind              : binding parameter (6:VARCHAR) <- [9000000018]
+2026-10-02T18:56:14.398+05:30 TRACE 51031 --- [user-service] [nio-8082-exec-1] org.hibernate.orm.jdbc.bind              : binding parameter (7:ENUM) <- [NGO]
+2026-10-02T18:56:14.398+05:30 TRACE 51031 --- [user-service] [nio-8082-exec-1] org.hibernate.orm.jdbc.bind              : binding parameter (8:TIMESTAMP) <- [2026-10-02T18:56:14.388519]
+2026-10-02T18:57:18.517+05:30  INFO 51031 --- [user-service] [rap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+>>>>>>> 713e2ec (Add New Feature in Forgot Password)
