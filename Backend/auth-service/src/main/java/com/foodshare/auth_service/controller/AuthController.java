@@ -6,16 +6,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.foodshare.auth_service.dto.AuthResponse;
-<<<<<<< HEAD
-import com.foodshare.auth_service.dto.LoginRequest;
-import com.foodshare.auth_service.dto.RegisterRequest;
-=======
 import com.foodshare.auth_service.dto.ForgotPasswordRequest;
 import com.foodshare.auth_service.dto.LoginRequest;
 import com.foodshare.auth_service.dto.RegisterRequest;
 import com.foodshare.auth_service.dto.ResetPasswordRequest;
 import com.foodshare.auth_service.dto.VerifyOtpRequest;
->>>>>>> 713e2ec (Add New Feature in Forgot Password)
 import com.foodshare.auth_service.service.AuthService;
 
 import jakarta.validation.Valid;
@@ -53,8 +48,6 @@ public class AuthController {
 
         return authService.login(request);
     }
-<<<<<<< HEAD
-=======
 
     // =========================================
     // FORGOT PASSWORD
@@ -91,5 +84,4 @@ public class AuthController {
 
         return authService.resetPassword(request);
     }
->>>>>>> 713e2ec (Add New Feature in Forgot Password)
 }

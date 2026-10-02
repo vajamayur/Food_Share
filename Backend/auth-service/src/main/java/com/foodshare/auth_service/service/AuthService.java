@@ -1,25 +1,5 @@
 package com.foodshare.auth_service.service;
 
-<<<<<<< HEAD
-import com.foodshare.auth_service.dto.AuthResponse;
-import com.foodshare.auth_service.dto.LoginRequest;
-import com.foodshare.auth_service.dto.RegisterRequest;
-import com.foodshare.auth_service.entity.User;
-import com.foodshare.auth_service.repository.UserRepository;
-import com.foodshare.auth_service.security.JwtService;
-
-import lombok.RequiredArgsConstructor;
-
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-
-@Service
-@RequiredArgsConstructor
-public class AuthService {
-
-    private final UserRepository userRepository;
-
-=======
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Random;
@@ -50,16 +30,9 @@ public class AuthService {
     private static final Logger log = LoggerFactory.getLogger(AuthService.class);
 
     private final UserRepository userRepository;
-
     private final PasswordResetTokenRepository passwordResetTokenRepository;
-
->>>>>>> 713e2ec (Add New Feature in Forgot Password)
     private final PasswordEncoder passwordEncoder;
-
     private final JwtService jwtService;
-
-<<<<<<< HEAD
-=======
     private final JavaMailSender mailSender;
 
     @Autowired
@@ -75,168 +48,96 @@ public class AuthService {
         this.jwtService = jwtService;
         this.mailSender = mailSender;
     }
->>>>>>> 713e2ec (Add New Feature in Forgot Password)
 
     // =========================================
     // REGISTER
     // =========================================
 
     public AuthResponse register(RegisterRequest request) {
-
         if (userRepository.existsByEmail(request.getEmail())) {
-
             return AuthResponse.builder()
                     .token(null)
                     .message("Email already registered")
-<<<<<<< HEAD
-=======
                     .success(false)
->>>>>>> 713e2ec (Add New Feature in Forgot Password)
                     .build();
         }
 
         User user = User.builder()
-
                 .fullName(request.getFullName())
-
                 .email(request.getEmail())
-
-                .password(
-                        passwordEncoder.encode(
-                                request.getPassword()
-                        )
-                )
-
+                .password(passwordEncoder.encode(request.getPassword()))
                 .role(request.getRole())
-
                 .active(true)
-
                 .build();
 
-        User savedUser =
-                userRepository.save(user);
+        User savedUser = userRepository.save(user);
 
-
-        // Generate JWT
-        String token =
-                jwtService.generateToken(
-                        savedUser.getEmail(),
-                        savedUser.getId(),
-                        savedUser.getRole().name()
-                );
-
+        String token = jwtService.generateToken(
+                savedUser.getEmail(),
+                savedUser.getId(),
+                savedUser.getRole().name()
+        );
 
         return AuthResponse.builder()
-
                 .token(token)
-<<<<<<< HEAD
-
-=======
                 .success(true)
->>>>>>> 713e2ec (Add New Feature in Forgot Password)
                 .message("Registration Successful")
-
                 .userId(savedUser.getId())
-
                 .fullName(savedUser.getFullName())
-
                 .email(savedUser.getEmail())
-
                 .role(savedUser.getRole().name())
-
                 .build();
     }
-
 
     // =========================================
     // LOGIN
     // =========================================
 
     public AuthResponse login(LoginRequest request) {
-
-        User user =
-                userRepository
-                        .findByEmail(request.getEmail())
-                        .orElse(null);
-
+        User user = userRepository.findByEmail(request.getEmail()).orElse(null);
 
         if (user == null) {
-
             return AuthResponse.builder()
                     .token(null)
                     .message("Invalid email or password")
-<<<<<<< HEAD
-=======
                     .success(false)
->>>>>>> 713e2ec (Add New Feature in Forgot Password)
                     .build();
         }
 
-
         if (!Boolean.TRUE.equals(user.getActive())) {
-
             return AuthResponse.builder()
                     .token(null)
                     .message("Account is inactive")
-<<<<<<< HEAD
-=======
                     .success(false)
->>>>>>> 713e2ec (Add New Feature in Forgot Password)
                     .build();
         }
 
-
-        boolean passwordMatches =
-                passwordEncoder.matches(
-                        request.getPassword(),
-                        user.getPassword()
-                );
-
+        boolean passwordMatches = passwordEncoder.matches(request.getPassword(), user.getPassword());
 
         if (!passwordMatches) {
-
             return AuthResponse.builder()
                     .token(null)
                     .message("Invalid email or password")
-<<<<<<< HEAD
-=======
                     .success(false)
->>>>>>> 713e2ec (Add New Feature in Forgot Password)
                     .build();
         }
 
-
-        // Generate JWT
-        String token =
-                jwtService.generateToken(
-                        user.getEmail(),
-                        user.getId(),
-                        user.getRole().name()
-                );
-
+        String token = jwtService.generateToken(
+                user.getEmail(),
+                user.getId(),
+                user.getRole().name()
+        );
 
         return AuthResponse.builder()
-
                 .token(token)
-<<<<<<< HEAD
-
-=======
                 .success(true)
->>>>>>> 713e2ec (Add New Feature in Forgot Password)
                 .message("Login Successful")
-
                 .userId(user.getId())
-
                 .fullName(user.getFullName())
-
                 .email(user.getEmail())
-
                 .role(user.getRole().name())
-
                 .build();
     }
-<<<<<<< HEAD
-=======
 
     public AuthResponse forgotPassword(ForgotPasswordRequest request) {
         String email = normalizeEmail(request.getEmail());
@@ -289,6 +190,14 @@ public class AuthService {
     public AuthResponse verifyOtp(VerifyOtpRequest request) {
         String email = normalizeEmail(request.getEmail());
         String otp = request.getOtp() == null ? "" : request.getOtp().trim();
+
+        if (email == null || email.isBlank()) {
+            return AuthResponse.builder()
+                    .message("Email is required")
+                    .email(email)
+                    .success(false)
+                    .build();
+        }
 
         PasswordResetToken resetToken = passwordResetTokenRepository.findByEmail(email).orElse(null);
         if (resetToken == null || resetToken.getExpiresAt().isBefore(LocalDateTime.now())) {
@@ -393,10 +302,10 @@ public class AuthService {
         return String.format("%06d", new Random().nextInt(1000000));
     }
 
-        private boolean sendOtpEmail(String email, String otp) {
+    private boolean sendOtpEmail(String email, String otp) {
         if (mailSender == null) {
-                        log.warn("No JavaMailSender configured; password-reset email was not sent.");
-                        return false;
+            log.warn("No JavaMailSender configured; password-reset email was not sent.");
+            return false;
         }
 
         try {
@@ -406,12 +315,10 @@ public class AuthService {
             message.setText("Your FoodShare OTP is: " + otp + "\nIt expires in 5 minutes.");
             mailSender.send(message);
             log.info("OTP sent to {} via email", email);
-                        return true;
+            return true;
         } catch (Exception e) {
-                        log.warn("Email delivery failed for {}: {}", email, e.getMessage());
-                        return false;
+            log.warn("Email delivery failed for {}: {}", email, e.getMessage());
+            return false;
         }
     }
-
->>>>>>> 713e2ec (Add New Feature in Forgot Password)
 }

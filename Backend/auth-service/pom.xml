@@ -80,17 +80,14 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-<<<<<<< HEAD
-                <!-- JWT API -->
-=======
-                <!-- Mail -->
+
+        <!-- Mail -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
 
         <!-- JWT API -->
->>>>>>> 713e2ec (Add New Feature in Forgot Password)
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-api</artifactId>
@@ -112,15 +109,12 @@
             <version>0.13.0</version>
             <scope>runtime</scope>
         </dependency>
-<<<<<<< HEAD
-=======
-        
+
         <!-- Spring Cloud Load Balancer -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-loadbalancer</artifactId>
         </dependency>
->>>>>>> 713e2ec (Add New Feature in Forgot Password)
 
     </dependencies>
 

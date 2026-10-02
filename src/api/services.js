@@ -36,6 +36,7 @@ export const authApi = {
     syncLegacyDashboardSession(response);
     return response;
   },
+
   async register(details) {
     const response = await apiRequest("/auth/register", {
       method: "POST",
@@ -54,17 +55,40 @@ export const authApi = {
     syncLegacyDashboardSession(response);
     return response;
   },
-<<<<<<< HEAD
-=======
-  // Forgot Password
-    async forgotPassword(email) { const response = await apiRequest( "/auth/forgot-password", 
-      { method: "POST", body: JSON.stringify({ email: email }) } ); if (!response.success) { throw new Error( response.message || "Unable to send OTP" ); } return response; },
 
-  // Verify OTP
-  async verifyOtp(email, otp) { const response = await apiRequest( "/auth/verify-otp", { method: "POST", body: JSON.stringify({ email: email, otp: otp }) } ); if (!response.success) { throw new Error( response.message || "Invalid OTP" ); } return response; },
-  // Reset Password
-  async resetPassword({ email, otp, newPassword }) { const response = await apiRequest( "/auth/reset-password", { method: "POST", body: JSON.stringify({ email: email, otp: otp, newPassword: newPassword }) } ); if (!response.success) { throw new Error( response.message || "Password reset failed" ); } return response; },
->>>>>>> 713e2ec (Add New Feature in Forgot Password)
+  async forgotPassword(email) {
+    const response = await apiRequest("/auth/forgot-password", {
+      method: "POST",
+      body: JSON.stringify({ email })
+    });
+    if (!response.success) {
+      throw new Error(response.message || "Unable to send OTP");
+    }
+    return response;
+  },
+
+  async verifyOtp(email, otp) {
+    const response = await apiRequest("/auth/verify-otp", {
+      method: "POST",
+      body: JSON.stringify({ email, otp })
+    });
+    if (!response.success) {
+      throw new Error(response.message || "Invalid OTP");
+    }
+    return response;
+  },
+
+  async resetPassword({ email, otp, newPassword }) {
+    const response = await apiRequest("/auth/reset-password", {
+      method: "POST",
+      body: JSON.stringify({ email, otp, newPassword })
+    });
+    if (!response.success) {
+      throw new Error(response.message || "Password reset failed");
+    }
+    return response;
+  },
+
   logout() {
     setAccessToken(null);
   }
@@ -76,9 +100,10 @@ export const emailApi = {
     return {
       success: true,
       otp,
-      message: `Verification code generated.`
+      message: "Verification code generated."
     };
   },
+
   async resetPassword({ email, password }) {
     const users = JSON.parse(localStorage.getItem("foodshare_users") || "[]");
     const index = users.findIndex((user) => user.email && user.email.toLowerCase() === String(email).toLowerCase());
