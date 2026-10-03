@@ -10,9 +10,6 @@ chmod +x user-service/mvnw
 chmod +x food-service/mvnw
 
 You can verify:
-<<<<<<< HEAD
-ls -l service-registry/mvnw
-=======
 ls -l service-registry/mvnw
 
 --- STMP Set Variable

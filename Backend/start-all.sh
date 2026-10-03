@@ -1,57 +1,60 @@
 #!/bin/bash
 
-
 set -e
 BACKEND_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-<<<<<<< HEAD
-=======
+if ! command -v lsof >/dev/null 2>&1; then
+  echo "lsof is required to detect running services." >&2
+  exit 1
+fi
+
 if lsof -ti tcp:8084 >/dev/null 2>&1; then
-	echo "Auth Service is already running; run ./stop-all.sh before applying SMTP settings." >&2
-	exit 1
+  echo "Auth Service is already running; run ./stop-all.sh before applying SMTP settings." >&2
+  exit 1
 fi
 
 export MAIL_HOST="${MAIL_HOST:-smtp.gmail.com}"
 export MAIL_PORT="${MAIL_PORT:-587}"
 
 if [[ -z "${MAIL_USERNAME:-}" ]]; then
-	read -r -p "SMTP sender Gmail address: " MAIL_USERNAME
+  read -r -p "SMTP sender Gmail address: " MAIL_USERNAME
 fi
 
-MAIL_PASSWORD=""
-read -r -s -p "Google App Password (input hidden): " MAIL_PASSWORD
-printf '\n'
+if [[ -z "${MAIL_PASSWORD:-}" ]]; then
+  MAIL_PASSWORD=""
+  read -r -s -p "Google App Password (input hidden): " MAIL_PASSWORD
+  printf '\n'
+fi
 
 MAIL_PASSWORD="${MAIL_PASSWORD//[[:space:]]/}"
 if [[ -z "$MAIL_USERNAME" || -z "$MAIL_PASSWORD" ]]; then
-	echo "SMTP sender address and Google App Password are required." >&2
-	exit 1
+  echo "SMTP sender address and Google App Password are required." >&2
+  exit 1
 fi
 
 export MAIL_USERNAME MAIL_PASSWORD
 
->>>>>>> 713e2ec (Add New Feature in Forgot Password)
 echo "Starting FoodShare Microservices..."
 
 start_service() {
-	local service="$1"
-	local port
+  local service="$1"
+  local port
 
-	case "$service" in
-		service-registry) port=8761 ;;
-		api-gateway) port=8079 ;;
-		auth-service) port=8084 ;;
-		user-service) port=8082 ;;
-		food-service) port=8083 ;;
-		request-service) port=8085 ;;
-		esac
+  case "$service" in
+    service-registry) port=8761 ;;
+    api-gateway) port=8079 ;;
+    auth-service) port=8084 ;;
+    user-service) port=8082 ;;
+    food-service) port=8083 ;;
+    request-service) port=8085 ;;
+  esac
 
-	if lsof -ti tcp:"$port" >/dev/null 2>&1; then
-		echo "$service is already running on port $port; skipping."
-		return
-	fi
+  if lsof -ti tcp:"$port" >/dev/null 2>&1; then
+    echo "$service is already running on port $port; skipping."
+    return
+  fi
 
-	(cd "$BACKEND_DIR/$service" && bash ./mvnw spring-boot:run > "$BACKEND_DIR/$service.log" 2>&1) &
+  (cd "$BACKEND_DIR/$service" && bash ./mvnw spring-boot:run > "$BACKEND_DIR/$service.log" 2>&1) &
 }
 
 start_service "service-registry"
