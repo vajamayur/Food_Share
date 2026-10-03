@@ -1073,6 +1073,22 @@ table.pa-table tr:last-child td { border-bottom: none; }
 .section-title-row h2 { font-size: 1.2rem; margin: 0; }
 
 .donation-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.25rem; }
+.payment-donation-layout { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); align-items: start; gap: 1.5rem; }
+.payment-donation-form { display: grid; gap: 1rem; }
+.payment-donation-form .field { margin: 0; }
+.payment-donation-message { min-height: 1.2rem; margin: 0; font-size: 0.84rem; color: var(--text-muted); }
+.payment-donation-message.success { color: var(--leaf-700); }
+.payment-donation-message.error { color: var(--tomato-600); }
+.payment-donation-history { min-width: 0; }
+.payment-donation-history h3 { margin: 0; font-size: 1.05rem; }
+.payment-history-summary { display: flex; justify-content: space-between; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid var(--border); color: var(--text-muted); }
+.payment-history-summary strong { color: var(--leaf-700); }
+.payment-history-list { list-style: none; margin: 0; padding: 0; }
+.payment-history-row { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid var(--border); }
+.payment-history-row div { display: grid; gap: 0.25rem; }
+.payment-history-row div span, .payment-history-status, .payment-history-empty { color: var(--text-muted); font-size: 0.82rem; }
+.payment-history-status { text-transform: capitalize; }
+@media (max-width: 700px) { .payment-donation-layout { grid-template-columns: 1fr; } }
 @media (max-width: 360px) {
   .donation-grid { grid-template-columns: 1fr; }
 }

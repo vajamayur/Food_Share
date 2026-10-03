@@ -7,8 +7,8 @@ if ! command -v lsof >/dev/null 2>&1; then
     exit 1
 fi
 
-ports=(8079 8084 8082 8083 8085 8761)
-services=(api-gateway auth-service user-service food-service request-service service-registry)
+ports=(8079 8084 8082 8083 8085 8086 8761)
+services=(api-gateway auth-service user-service food-service request-service payment-service service-registry)
 had_errors=0
 
 for index in "${!ports[@]}"; do

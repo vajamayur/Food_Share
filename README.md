@@ -31,7 +31,7 @@ The React app calls the Spring Boot API gateway at `http://localhost:8079/api` b
 VITE_API_BASE_URL=https://api.example.com/api npm run dev
 ```
 
-Start the backend services in this order: service registry, API gateway, auth service, food service, request service, and user service. The gateway routes `/api/auth`, `/api/foods`, `/api/requests`, and `/api/users` to those services. Auth registration and login now submit to the backend; the backend persists account data in its configured MySQL database (`foodshare_auth_db`). Food and request API helpers are available for dashboard flows and persist through their corresponding service databases.
+Start the backend services in this order: service registry, API gateway, auth service, food service, request service, payment service, and user service. The gateway routes `/api/auth`, `/api/foods`, `/api/requests`, `/api/payments`, and `/api/users` to those services. Auth registration and login now submit to the backend; the backend persists account data in its configured MySQL database (`foodshare_auth_db`). Food, request, and payment API helpers are available for dashboard flows and persist through their corresponding service databases.
 
 The MySQL databases must exist and the credentials in each backend service's `application.properties` must be configured before submitting data. Do not use the default empty database password outside local development.
 

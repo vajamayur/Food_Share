@@ -10,11 +10,13 @@ document.addEventListener('DOMContentLoaded', () => {
   currentUser = FS.requireAuth('donor');
   if (!currentUser) return;
   fsMountUserChrome(currentUser);
+  mountPaymentPanel();
   populateSelects();
   setDefaultExpiry();
   bindTabs();
   bindFilters();
   bindForm();
+  bindPaymentForm();
   renderAll();
 });
 
@@ -39,8 +41,196 @@ function bindTabs() {
       link.classList.add('active');
       document.querySelectorAll('[data-panel]').forEach(p => p.style.display = 'none');
       document.querySelector(`[data-panel="${link.dataset.tab}"]`).style.display = 'block';
+      if (link.dataset.tab === 'payments') loadPaymentHistory();
       document.getElementById('sidebar').classList.remove('open');
     });
+  });
+}
+
+function mountPaymentPanel() {
+  const nav = document.querySelector('.dash-nav');
+  const overview = document.querySelector('[data-panel="overview"]');
+  if (!nav || !overview) return;
+
+  const paymentTab = document.createElement('li');
+  paymentTab.innerHTML = '<a data-tab="payments" href="#payments"><svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M3 10h18"></path></svg> Monetary donations</a>';
+  nav.appendChild(paymentTab);
+
+  const panel = document.createElement('section');
+  panel.dataset.panel = 'payments';
+  panel.style.display = 'none';
+  panel.innerHTML = `
+    <div class="section-title-row">
+      <div>
+        <p class="eyebrow">Support FoodShare</p>
+        <h2>Monetary donations</h2>
+      </div>
+    </div>
+    <div class="payment-donation-layout">
+      <form class="form-shell payment-donation-form" id="paymentDonationForm">
+        <div class="field">
+          <label for="paymentDonationAmount">Donation amount (INR)</label>
+          <input class="input" id="paymentDonationAmount" min="1" name="amount" placeholder="Enter an amount" required step="0.01" type="number">
+        </div>
+        <button class="btn btn-primary" type="submit">Continue to payment</button>
+        <p class="payment-donation-message" id="paymentDonationMessage" role="status" aria-live="polite"></p>
+      </form>
+      <section class="payment-donation-history" aria-labelledby="paymentDonationHistoryTitle">
+        <div class="section-title-row">
+          <h3 id="paymentDonationHistoryTitle">My monetary donations</h3>
+          <button class="btn btn-secondary btn-sm" id="refreshPaymentHistory" type="button">Refresh</button>
+        </div>
+        <div id="paymentDonationHistory" aria-live="polite">Your payment history will appear here.</div>
+      </section>
+    </div>`;
+  overview.parentElement.appendChild(panel);
+}
+
+function paymentUserId() {
+  const userId = Number(currentUser && currentUser.id);
+  if (!Number.isSafeInteger(userId) || userId <= 0 || !localStorage.getItem('foodshare_access_token')) {
+    throw new Error('Sign in with your FoodShare account to make a monetary donation.');
+  }
+  return userId;
+}
+
+function loadRazorpayCheckout() {
+  if (window.Razorpay) return Promise.resolve();
+  return new Promise((resolve, reject) => {
+    const script = document.createElement('script');
+    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+    script.onload = () => window.Razorpay ? resolve() : reject(new Error('Secure checkout could not be loaded.'));
+    script.onerror = () => {
+      script.remove();
+      reject(new Error('Unable to load secure checkout. Please try again.'));
+    };
+    document.head.appendChild(script);
+  });
+}
+
+function setPaymentMessage(message, state = '') {
+  const status = document.getElementById('paymentDonationMessage');
+  if (!status) return;
+  status.textContent = message;
+  status.className = `payment-donation-message${state ? ` ${state}` : ''}`;
+}
+
+function formatPaymentAmount(amount, currency = 'INR') {
+  const value = Number(amount);
+  return new Intl.NumberFormat('en-IN', {
+    style: 'currency',
+    currency: currency || 'INR'
+  }).format(Number.isFinite(value) ? value : 0);
+}
+
+async function loadPaymentHistory() {
+  const history = document.getElementById('paymentDonationHistory');
+  if (!history) return;
+  history.textContent = 'Loading payment history...';
+  try {
+    const payments = await window.foodsharePaymentApi.getByUser(paymentUserId());
+    if (!Array.isArray(payments) || payments.length === 0) {
+      history.innerHTML = '<p class="payment-history-empty">No monetary donations yet.</p>';
+      return;
+    }
+
+    const totalPaid = payments
+      .filter(payment => String(payment.status).toUpperCase() === 'SUCCESS')
+      .reduce((total, payment) => total + Number(payment.amount || 0), 0);
+    history.innerHTML = `
+      <div class="payment-history-summary"><span>Successfully donated</span><strong>${formatPaymentAmount(totalPaid)}</strong></div>
+      <ul class="payment-history-list">${payments.map(payment => `
+        <li class="payment-history-row">
+          <div><strong>${formatPaymentAmount(payment.amount, payment.currency)}</strong><span>${fsEscape(payment.createdAt ? fsFormatDate(payment.createdAt) : 'Date unavailable')}</span></div>
+          <span class="payment-history-status">${fsEscape(payment.status || 'Pending')}</span>
+        </li>`).join('')}
+      </ul>`;
+  } catch (error) {
+    history.textContent = error.message || 'Could not load payment history.';
+  }
+}
+
+function bindPaymentForm() {
+  const form = document.getElementById('paymentDonationForm');
+  const refreshButton = document.getElementById('refreshPaymentHistory');
+  if (!form) return;
+
+  if (refreshButton) refreshButton.addEventListener('click', loadPaymentHistory);
+  form.addEventListener('submit', async event => {
+    event.preventDefault();
+    const amount = Number(document.getElementById('paymentDonationAmount').value);
+    const button = form.querySelector('button[type="submit"]');
+    if (!Number.isFinite(amount) || amount < 1) {
+      setPaymentMessage('Enter a donation amount of at least INR 1.', 'error');
+      return;
+    }
+
+    button.disabled = true;
+    button.textContent = 'Preparing secure checkout...';
+    setPaymentMessage('');
+    try {
+      const userId = paymentUserId();
+      const api = window.foodsharePaymentApi;
+      if (!api) throw new Error('Payment service is unavailable. Please refresh and try again.');
+      await loadRazorpayCheckout();
+      const order = await api.createOrder({ userId, donationId: null, amount });
+      if (!order.success || !order.orderId || !order.keyId || !order.paymentId) {
+        throw new Error(order.message || 'Could not start the payment.');
+      }
+
+      let paymentHandled = false;
+      const checkout = new window.Razorpay({
+        key: order.keyId,
+        amount: Math.round(Number(order.amount) * 100),
+        currency: order.currency || 'INR',
+        name: 'FoodShare',
+        description: 'Monetary donation',
+        order_id: order.orderId,
+        prefill: { name: currentUser.name || '', email: currentUser.email || '' },
+        handler: async response => {
+          paymentHandled = true;
+          button.textContent = 'Verifying payment...';
+          setPaymentMessage('Verifying your payment...');
+          try {
+            const verification = await api.verify({
+              paymentId: order.paymentId,
+              razorpayOrderId: response.razorpay_order_id,
+              razorpayPaymentId: response.razorpay_payment_id,
+              razorpaySignature: response.razorpay_signature
+            });
+            if (!verification.success) throw new Error(verification.message || 'Payment verification failed.');
+            setPaymentMessage('Your donation was received. Thank you.', 'success');
+            fsToast('Monetary donation received. Thank you!', 'success');
+            form.reset();
+            await loadPaymentHistory();
+          } catch (error) {
+            setPaymentMessage(error.message || 'Payment verification failed.', 'error');
+            fsToast(error.message || 'Payment verification failed.', 'error');
+          } finally {
+            button.disabled = false;
+            button.textContent = 'Continue to payment';
+          }
+        },
+        modal: {
+          ondismiss: () => {
+            if (!paymentHandled) setPaymentMessage('Payment was not completed. You can try again.', 'error');
+            button.disabled = false;
+            button.textContent = 'Continue to payment';
+          }
+        }
+      });
+      checkout.on('payment.failed', response => {
+        paymentHandled = true;
+        setPaymentMessage(response.error && response.error.description || 'Payment failed. Please try again.', 'error');
+        button.disabled = false;
+        button.textContent = 'Continue to payment';
+      });
+      checkout.open();
+    } catch (error) {
+      setPaymentMessage(error.message || 'Could not start the payment.', 'error');
+      button.disabled = false;
+      button.textContent = 'Continue to payment';
+    }
   });
 }
 

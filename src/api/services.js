@@ -159,6 +159,24 @@ export const requestApi = {
   }
 };
 
+export const paymentApi = {
+  createOrder(order) {
+    return apiRequest("/payments/create-order", { method: "POST", body: JSON.stringify(order) });
+  },
+  verify(payment) {
+    return apiRequest("/payments/verify", { method: "POST", body: JSON.stringify(payment) });
+  },
+  get(id) {
+    return apiRequest(`/payments/${id}`);
+  },
+  getByUser(userId) {
+    return apiRequest(`/payments/user/${userId}`);
+  },
+  getByDonation(donationId) {
+    return apiRequest(`/payments/donation/${donationId}`);
+  }
+};
+
 export const userApi = {
   register(details) {
     return apiRequest("/users/register", { method: "POST", body: JSON.stringify(details) });
