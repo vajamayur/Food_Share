@@ -1,13 +1,13 @@
-
 package com.foodshare.notification_service.service;
 
 import java.util.List;
 import java.util.Locale;
 
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import com.foodshare.notification_service.channel.EmailNotificationSender;
+import com.foodshare.notification_service.channel.PushNotificationSender;
+import com.foodshare.notification_service.channel.SmsNotificationSender;
 import com.foodshare.notification_service.dto.NotificationRequest;
 import com.foodshare.notification_service.entity.Notification;
 import com.foodshare.notification_service.repository.NotificationRepository;
@@ -16,19 +16,23 @@ import com.foodshare.notification_service.repository.NotificationRepository;
 public class NotificationService {
 
     private final NotificationRepository repository;
-    private final JavaMailSender mailSender;
+    private final EmailNotificationSender emailSender;
+    private final SmsNotificationSender smsSender;
+    private final PushNotificationSender pushSender;
 
     public NotificationService(
             NotificationRepository repository,
-            JavaMailSender mailSender) {
+            EmailNotificationSender emailSender,
+            SmsNotificationSender smsSender,
+            PushNotificationSender pushSender) {
         this.repository = repository;
-        this.mailSender = mailSender;
+        this.emailSender = emailSender;
+        this.smsSender = smsSender;
+        this.pushSender = pushSender;
     }
 
     public Notification send(NotificationRequest request) {
-
-        String channel = request.getChannel()
-                .toUpperCase(Locale.ROOT);
+        String channel = request.getChannel().trim().toUpperCase(Locale.ROOT);
 
         Notification notification = new Notification();
         notification.setRecipient(request.getRecipient());
@@ -37,30 +41,37 @@ public class NotificationService {
         notification.setMessage(request.getMessage());
         notification.setStatus("PENDING");
 
+        // Save first so a record exists even if an external provider fails.
         notification = repository.save(notification);
 
         try {
-            if ("EMAIL".equals(channel)) {
-                SimpleMailMessage email = new SimpleMailMessage();
-                email.setTo(request.getRecipient());
-                email.setSubject(
-                    "FoodShare: " + request.getEventType()
-                );
-                email.setText(request.getMessage());
+            String subject = "FoodShare: " + request.getEventType();
 
-                mailSender.send(email);
-                notification.setStatus("SENT");
-
-            } else if ("SMS".equals(channel)
-                    || "PUSH".equals(channel)) {
-                notification.setStatus("NOT_CONFIGURED");
-
-            } else {
-                notification.setStatus("FAILED");
+            switch (channel) {
+                case "EMAIL":
+                    emailSender.sendEmail(
+                        request.getRecipient(), subject, request.getMessage());
+                    break;
+                case "SMS":
+                    smsSender.sendSms(
+                        request.getRecipient(), request.getMessage());
+                    break;
+                case "PUSH":
+                    // For PUSH, recipient must be an FCM device registration token.
+                    pushSender.sendPush(
+                        request.getRecipient(), subject, request.getMessage());
+                    break;
+                default:
+                    throw new IllegalArgumentException(
+                        "Unsupported notification channel: " + channel);
             }
 
+            notification.setStatus("SENT");
         } catch (Exception exception) {
             notification.setStatus("FAILED");
+            // Keep provider details in server logs, not in the API response.
+            System.err.println("Notification delivery failed for id "
+                + notification.getId() + ": " + exception.getMessage());
         }
 
         return repository.save(notification);
