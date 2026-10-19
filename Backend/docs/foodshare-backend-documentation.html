@@ -1,16 +1,446 @@
 <!doctype html>
-<html lang="gu"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>FoodShare Backend Documentation</title>
-<style>:root{--ink:#102a43;--muted:#52677d;--line:#dbe5ef;--blue:#1e5aa8;--green:#087f5b;--amber:#a15c00;--rose:#a52f5c}*{box-sizing:border-box}body{margin:0;background:#f5f8fb;color:var(--ink);font:15px/1.55 Arial,sans-serif}header{background:linear-gradient(120deg,#102a43,#1e5aa8);color:#fff;padding:48px max(6vw,24px)}header h1{margin:0 0 8px;font-size:34px}header p{margin:0;color:#d7e7f6}.wrap{width:min(1180px,92%);margin:32px auto 64px}.notice{border-left:5px solid #d89725;background:#fff7e7;padding:14px 18px;margin:20px 0;border-radius:4px}.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:24px;margin:20px 0;box-shadow:0 3px 10px #102a4309}h2{margin:0 0 14px;font-size:24px}h3{margin:24px 0 8px;font-size:19px}p{margin:8px 0}.diagram{width:100%;border:1px solid var(--line);border-radius:10px;background:#f6f9fc}table{border-collapse:collapse;width:100%;margin:12px 0}th,td{padding:10px 12px;border:1px solid var(--line);vertical-align:top;text-align:left}th{background:#edf3f8;font-size:13px}code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}code{background:#edf3f8;padding:2px 5px;border-radius:4px;color:#174a7e}pre{white-space:pre-wrap;background:#102a43;color:#e8f2fc;border-radius:8px;padding:16px;overflow:auto;font-size:13px}.method{font-size:12px;font-weight:bold;padding:3px 7px;border-radius:999px;color:#fff;white-space:nowrap}.get{background:#087f5b}.post{background:#1e5aa8}.put{background:#a15c00}.delete{background:#a52f5c}.pill{display:inline-block;padding:2px 8px;border-radius:999px;background:#e7f5ff;color:#145184;font-weight:bold;font-size:12px}.risk{background:#fff0f2;border-left:5px solid #c92a2a;padding:12px 16px;border-radius:4px}ul{padding-left:22px}@media print{body{background:#fff}.wrap{width:100%;margin:0}.card{box-shadow:none;break-inside:avoid}header{padding:24px}}</style></head>
-<body><header><h1>FoodShare Backend Documentation</h1><p>Repository-based technical documentation • generated 14 September 2026</p></header><main class="wrap">
-<section class="card"><h2>1. પ્રોજેક્ટનો સાર</h2><p>FoodShare એક Spring Boot microservices backend છે. હાલની codebaseમાં Authentication, Food listing, User management, API Gateway અને Eureka Service Registry એમ પાંચ runtime modules છે. દરેક business service અલગ MySQL database વાપરે છે.</p><div class="notice"><strong>Implementation note:</strong> આ document code અને <code>application.properties</code> પર આધારિત છે. Gateway નું configured port <strong>8079</strong> છે (start scriptમાં લખાયેલ 8080 નહીં). Auth Service 8084 છે. <strong>donation-service</strong> start scriptમાં ઉલ્લેખાય છે, પરંતુ આ repositoryમાં તેનો module નથી.</div></section>
-<section class="card"><h2>2. Architecture / Flow Diagram</h2><img class="diagram" src="foodshare-system-flow.svg" alt="FoodShare backend service and API flow diagram"><p>Gateway મારફતે Auth અને Food API ઉપલબ્ધ છે. User API સીધો <code>http://localhost:8082</code> પર ચાલે છે, કારણ કે તેની Gateway route અને Eureka settings નથી.</p></section>
-<section class="card"><h2>3. Service overview</h2><table><thead><tr><th>Service</th><th>Port</th><th>જવાબદારી</th><th>Discovery / access</th><th>Database</th></tr></thead><tbody><tr><td><strong>service-registry</strong></td><td>8761</td><td>Eureka registry/dashboard</td><td>Standalone</td><td>—</td></tr><tr><td><strong>api-gateway</strong></td><td>8079</td><td>Path-based routing using <code>lb://</code></td><td>Eureka client</td><td>—</td></tr><tr><td><strong>auth-service</strong></td><td>8084</td><td>Register, login, BCrypt, JWT</td><td>AUTH-SERVICE through Gateway</td><td>foodshare_auth_db</td></tr><tr><td><strong>food-service</strong></td><td>8083</td><td>Food listing CRUD and availability lookup</td><td>FOOD-SERVICE through Gateway</td><td>foodshare_food_db</td></tr><tr><td><strong>user-service</strong></td><td>8082</td><td>Separate user CRUD/login</td><td>Direct only in current config</td><td>foodshare_user_db</td></tr></tbody></table></section>
-<section class="card"><h2>4. Request flow</h2><h3>A. Auth register / login</h3><ol><li>Client gateway URL પર <code>/api/auth/register</code> અથવા <code>/api/auth/login</code> call કરે છે.</li><li>Gateway Eureka પાસેથી <code>AUTH-SERVICE</code> શોધી Auth Serviceને request આપે છે.</li><li>Register સમયે email unique check થાય છે; password BCryptથી hash થાય છે; user Auth databaseમાં save થાય છે.</li><li>Register/login સફળ થાય તો signed JWT મળે છે. JWTમાં subject=email, <code>userId</code>, <code>role</code>, issued-at અને expiry હોય છે.</li></ol><h3>B. Food CRUD</h3><ol><li>Client <code>/api/foods/**</code> gateway URL પર call કરે છે.</li><li>Gateway request <code>FOOD-SERVICE</code> સુધી route કરે છે.</li><li>Controller validation પછી FoodServiceImpl repository મારફતે <code>foods</code> table વાંચે/લખે છે.</li><li>નવી food record નો status <code>AVAILABLE</code> અને <code>createdAt</code> આપમેળે set થાય છે.</li></ol><h3>C. User management</h3><p>હાલ Client સીધું <code>http://localhost:8082/api/users/**</code> call કરે છે. User Service Auth Service સાથે data અથવા token શેર કરતી નથી; તે અલગ <code>users</code> table વાપરે છે.</p></section>
-<section class="card"><h2>5. Base URLs અને routing</h2><table><thead><tr><th>કામ</th><th>Preferred current URL</th><th>Direct service URL</th></tr></thead><tbody><tr><td>Registry dashboard</td><td><code>http://localhost:8761/</code></td><td>—</td></tr><tr><td>Auth</td><td><code>http://localhost:8079/api/auth</code></td><td><code>http://localhost:8084/api/auth</code></td></tr><tr><td>Food</td><td><code>http://localhost:8079/api/foods</code></td><td><code>http://localhost:8083/api/foods</code></td></tr><tr><td>User</td><td>Not routed by Gateway</td><td><code>http://localhost:8082/api/users</code></td></tr></tbody></table></section>
-<section class="card"><h2>6. Auth Service API</h2><p><span class="pill">Public endpoints</span> બંને endpoints <code>@Valid</code> request validation કરે છે. Response body <code>AuthResponse</code> છે.</p><table><thead><tr><th>Method</th><th>Endpoint</th><th>Success</th><th>વિગત</th></tr></thead><tbody><tr><td><span class="method post">POST</span></td><td><code>/api/auth/register</code></td><td>200 (default controller status)</td><td>નવો auth user બનાવે, BCrypt password store કરે અને JWT આપે છે. Existing email માટે token null અને message આપે છે.</td></tr><tr><td><span class="method post">POST</span></td><td><code>/api/auth/login</code></td><td>200</td><td>Email/password અને active flag ચેક કરે; સફળ હોય તો JWT આપે છે.</td></tr></tbody></table><h3>Register request</h3><pre>{&#10;  "fullName": "Ravi Pandit",&#10;  "email": "ravi@example.com",&#10;  "password": "Secret@123",&#10;  "role": "DONOR"&#10;}</pre><p><strong>role values:</strong> <code>ADMIN</code>, <code>DONOR</code>, <code>NGO</code>, <code>VOLUNTEER</code>. <strong>Required:</strong> fullName, password; email email-format હોવો જોઈએ.</p><h3>Login request</h3><pre>{ "email": "ravi@example.com", "password": "Secret@123" }</pre><h3>Successful response</h3><pre>{&#10;  "token": "eyJ...",&#10;  "message": "Login Successful",&#10;  "userId": 1,&#10;  "fullName": "Ravi Pandit",&#10;  "email": "ravi@example.com",&#10;  "role": "DONOR"&#10;}</pre><p>Protected Auth Service endpoint ઉમેરવામાં આવે તો header <code>Authorization: Bearer &lt;token&gt;</code> મોકલવો. Configured token expiry <code>86400000 ms</code> (24 hours) છે.</p></section>
-<section class="card"><h2>7. Food Service API</h2><p>Request અને response JSON છે. <code>POST</code> માટે controller 201 આપે છે; બાકીના successful read/update/delete operations 200 આપે છે.</p><table><thead><tr><th>Method</th><th>Endpoint</th><th>Service operation</th><th>વિગત</th></tr></thead><tbody><tr><td><span class="method post">POST</span></td><td><code>/api/foods</code></td><td>createFood</td><td>નવી food listing બનાવે; status AVAILABLE થાય છે.</td></tr><tr><td><span class="method get">GET</span></td><td><code>/api/foods</code></td><td>getAllFoods</td><td>બધી listings આપે છે.</td></tr><tr><td><span class="method get">GET</span></td><td><code>/api/foods/{id}</code></td><td>getFoodById</td><td>ID દ્વારા એક listing આપે છે.</td></tr><tr><td><span class="method get">GET</span></td><td><code>/api/foods/donor/{donorId}</code></td><td>getFoodsByDonor</td><td>donor ID પ્રમાણે listing આપે છે.</td></tr><tr><td><span class="method get">GET</span></td><td><code>/api/foods/available</code></td><td>getAvailableFoods</td><td>માત્ર status AVAILABLE વાળા records આપે છે.</td></tr><tr><td><span class="method put">PUT</span></td><td><code>/api/foods/{id}</code></td><td>updateFood</td><td>name, category, quantity, unit, expiry, address, description update કરે છે; donorId અને status બદલાતા નથી.</td></tr><tr><td><span class="method delete">DELETE</span></td><td><code>/api/foods/{id}</code></td><td>deleteFood</td><td>Record delete કરે છે; response text: “Food deleted successfully”.</td></tr></tbody></table><h3>Create / update request</h3><pre>{&#10;  "donorId": 1,&#10;  "foodName": "Vegetable Biryani",&#10;  "category": "Cooked Food",&#10;  "quantity": 12,&#10;  "unit": "plates",&#10;  "expiryTime": "2026-09-15T20:00:00",&#10;  "pickupAddress": "Navrangpura, Ahmedabad",&#10;  "description": "Freshly prepared; pickup before 8 PM"&#10;}</pre><p><strong>Required:</strong> donorId, foodName, category, quantity (&gt; 0), unit, expiryTime, pickupAddress. <strong>Response fields:</strong> id, request fields, status, createdAt. Available status values: <code>AVAILABLE</code>, <code>RESERVED</code>, <code>CLAIMED</code>, <code>EXPIRED</code>, <code>CANCELLED</code>.</p></section>
-<section class="card"><h2>8. User Service API</h2><div class="notice"><strong>Separate implementation:</strong> આ API Gatewayથી exposed નથી અને Auth Service JWT ઉપયોગમાં લેતી નથી. User service નું SecurityConfig દરેક request permit કરે છે.</div><table><thead><tr><th>Method</th><th>Endpoint</th><th>Success</th><th>વિગત</th></tr></thead><tbody><tr><td><span class="method post">POST</span></td><td><code>/api/users/register</code></td><td>201</td><td>Email અને phone unique હોવા જોઈએ; user બનાવે છે.</td></tr><tr><td><span class="method post">POST</span></td><td><code>/api/users/login</code></td><td>200</td><td>Email અને password compare કરે છે; token આપતું નથી.</td></tr><tr><td><span class="method get">GET</span></td><td><code>/api/users</code></td><td>200</td><td>બધા users.</td></tr><tr><td><span class="method get">GET</span></td><td><code>/api/users/{id}</code></td><td>200</td><td>ID પ્રમાણે user.</td></tr><tr><td><span class="method put">PUT</span></td><td><code>/api/users/{id}</code></td><td>200</td><td>profile fields update કરે; nonblank password હોય તો તેને પણ replace કરે છે.</td></tr><tr><td><span class="method delete">DELETE</span></td><td><code>/api/users/{id}</code></td><td>200</td><td>user delete કરે છે.</td></tr></tbody></table><h3>Register / update request</h3><pre>{&#10;  "fullName": "Ravi Pandit",&#10;  "email": "ravi@example.com",&#10;  "phone": "9876543210",&#10;  "password": "Secret@123",&#10;  "address": "Ahmedabad",&#10;  "role": "DONOR"&#10;}</pre><p><strong>Validation:</strong> fullName, email, password mandatory; email valid format; phone request level પર 10 digits. Roles: DONOR, NGO, VOLUNTEER, ADMIN. UserResponse password પાછો આપતું નથી.</p></section>
-<section class="card"><h2>9. Data model</h2><table><thead><tr><th>Database / table</th><th>મુખ્ય fields</th><th>Notes</th></tr></thead><tbody><tr><td><code>foodshare_auth_db.users</code></td><td>id, fullName, email (unique), password, role, active, createdAt</td><td>Password BCrypt hashed; active defaults true.</td></tr><tr><td><code>foodshare_food_db.foods</code></td><td>id, donorId, foodName, category, quantity, unit, expiryTime, pickupAddress, description, status, createdAt</td><td>donorId foreign key તરીકે declared નથી; service તેને validate પણ કરતી નથી.</td></tr><tr><td><code>foodshare_user_db.users</code></td><td>id, full_name, email (unique), phone (unique), password, address, role, created_at, updated_at</td><td>Current User Service password plain textમાં persist કરે છે.</td></tr></tbody></table></section>
-<section class="card"><h2>10. Run order</h2><ol><li>MySQLમાં databases બનાવો: <code>foodshare_auth_db</code>, <code>foodshare_food_db</code>, <code>foodshare_user_db</code>.</li><li>દરેક serviceની <code>application.properties</code>માં datasource credentials validate કરો.</li><li>પહેલાં <code>service-registry</code> ચલાવો; પછી Gateway, Auth, Food; User Service અલગ ચલાવો.</li><li>Eureka dashboardમાં AUTH-SERVICE અને FOOD-SERVICE (અને Gateway) દેખાય છે કે નહીં તે ચકાસો.</li></ol><pre># દરેક moduleમાં અલગ terminalથી&#10;./mvnw spring-boot:run&#10;&#10;# API example&#10;curl -X GET http://localhost:8079/api/foods/available</pre><p><strong>Note:</strong> <code>start-all.sh</code>માં ports outdated છે અને non-existent donation-service ચલાવવાનો પ્રયાસ છે; તેને authoritative configuration માની શકાય નહીં.</p></section>
-<section class="card"><h2>11. Current implementation gaps / security notes</h2><div class="risk"><ul><li><strong>Duplicate user domains:</strong> Auth અને User services બંને પોતાની users table રાખે છે; data અને login behavior અલગ છે.</li><li><strong>User password security:</strong> UserServiceImpl plain-text password save/compare કરે છે. Production પહેલાં BCrypt લગાવવું જરૂરી છે.</li><li><strong>Authorization:</strong> Food Serviceમાં security configuration/JWT validation દેખાતી નથી; કોઈપણ caller CRUD કરી શકે છે.</li><li><strong>Gateway coverage:</strong> User Service માટે <code>/api/users/**</code> route નથી અને Eureka client config નથી.</li><li><strong>Errors:</strong> Food/User service ઘણા missing-resource અને duplicate cases માટે generic RuntimeException વાપરે છે; consistent HTTP error contract રાખવો સારું રહેશે.</li><li><strong>Secret management:</strong> JWT secret properties fileમાં છે; productionમાં environment/secret storeનો ઉપયોગ કરવો.</li></ul></div></section>
-</main></body></html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FoodShare Full Project Documentation</title>
+  <style>
+    :root {
+      --ink: #102a43;
+      --muted: #52677d;
+      --line: #dbe5ef;
+      --blue: #1e5aa8;
+      --green: #087f5b;
+      --amber: #a15c00;
+      --rose: #a52f5c;
+      --bg: #f5f8fb;
+      --panel: #ffffff;
+      --warn: #fff7e7;
+      --danger: #fff0f2;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font: 15px/1.6 Arial, sans-serif;
+    }
+    header {
+      background: linear-gradient(120deg, #102a43, #1e5aa8);
+      color: #fff;
+      padding: 40px 24px 32px;
+    }
+    h1, h2, h3, h4 { margin-top: 0; }
+    h1 { margin-bottom: 8px; font-size: 34px; }
+    header p { margin: 0; color: #dfeefb; }
+    .wrap {
+      width: min(1180px, 92%);
+      margin: 30px auto 64px;
+    }
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 24px;
+      margin: 22px 0;
+      box-shadow: 0 3px 10px rgba(16, 42, 67, 0.08);
+    }
+    .notice {
+      border-left: 5px solid #d89725;
+      background: var(--warn);
+      padding: 14px 18px;
+      margin: 18px 0;
+      border-radius: 4px;
+    }
+    .risk {
+      background: var(--danger);
+      border-left: 5px solid #c92a2a;
+      padding: 12px 16px;
+      border-radius: 4px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+    }
+    th, td {
+      border: 1px solid var(--line);
+      padding: 10px 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      background: #edf3f8;
+      font-size: 13px;
+    }
+    code, pre {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    code {
+      background: #edf3f8;
+      padding: 2px 5px;
+      border-radius: 4px;
+      color: #174a7e;
+    }
+    pre {
+      white-space: pre-wrap;
+      background: #102a43;
+      color: #e8f2fc;
+      border-radius: 8px;
+      padding: 16px;
+      overflow: auto;
+      font-size: 13px;
+    }
+    .pill {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: #e7f5ff;
+      color: #145184;
+      font-size: 12px;
+      font-weight: bold;
+    }
+    .method {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: bold;
+      padding: 3px 8px;
+      border-radius: 999px;
+      color: #fff;
+      white-space: nowrap;
+    }
+    .get { background: var(--green); }
+    .post { background: var(--blue); }
+    .put { background: var(--amber); }
+    .delete { background: var(--rose); }
+    ul, ol { padding-left: 22px; }
+    .diagram {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #f6f9fc;
+    }
+    .diagram-scroll { overflow-x: auto; }
+    .diagram-scroll .diagram { min-width: 860px; }
+    @media print {
+      body { background: #fff; }
+      .wrap { width: 100%; margin: 0; }
+      .card { box-shadow: none; break-inside: avoid; }
+      header { padding: 24px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>FoodShare Full Project Documentation</h1>
+    <p>Repository overview • frontend + backend • process report • updated 10 October 2026</p>
+  </header>
+
+  <main class="wrap">
+    <section class="card">
+      <h2>1. Project Summary</h2>
+      <p>FoodShare is a full-stack food donation and sharing platform. The repository contains a Vite + React frontend and a Spring Boot microservice backend. The application supports donor actions, NGO/volunteer collection workflows, admin management, login/signup flows, and food listing operations.</p>
+      <div class="notice"><strong>Key note:</strong> Frontend and backend must run together for the project to be fully functional. The frontend communicates with the backend through the API gateway on <code>http://localhost:8079/api</code>.</div>
+    </section>
+
+    <section class="card">
+      <h2>2. Full Project Structure</h2>
+      <table>
+        <thead>
+          <tr><th>Folder / Module</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>src/</code></td><td>React application pages, route registry, styles, layouts, and API helper files.</td></tr>
+          <tr><td><code>public/</code></td><td>Static assets, CSS, media, and legacy files for demo content.</td></tr>
+          <tr><td><code>Backend/</code></td><td>Spring Boot microservices backend workspace.</td></tr>
+          <tr><td><code>Backend/service-registry/</code></td><td>Eureka discovery service.</td></tr>
+          <tr><td><code>Backend/api-gateway/</code></td><td>Single entry point and route management for backend APIs.</td></tr>
+          <tr><td><code>Backend/auth-service/</code></td><td>Auth, users, registration, login, JWT handling.</td></tr>
+          <tr><td><code>Backend/food-service/</code></td><td>Food listing CRUD operations and availability tracking.</td></tr>
+          <tr><td><code>Backend/user-service/</code></td><td>Separate user profile management and user-related operations.</td></tr>
+          <tr><td><code>Backend/request-service/</code></td><td>Request and fulfillment workflow module.</td></tr>
+          <tr><td><code>Backend/payment_service/</code></td><td>Payment integration flows.</td></tr>
+          <tr><td><code>password-reset-service/</code></td><td>Password reset related service module.</td></tr>
+          <tr><td><code>scripts/</code></td><td>Project verification and operational helper scripts.</td></tr>
+          <tr><td><code>README.md</code></td><td>Frontend setup and usage instructions.</td></tr>
+          <tr><td><code>vercel.json</code></td><td>Vercel deployment configuration and security header setup.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>3. Service Architecture Diagram</h2>
+      <div class="diagram-scroll" style="margin: 18px 0 12px; padding: 12px; border: 1px solid var(--line); border-radius: 12px; background: linear-gradient(180deg,#f9fbff,#f3f8ff);">
+        <svg class="diagram" viewBox="0 0 960 740" role="img" aria-labelledby="architecture-title architecture-description">
+          <title id="architecture-title">FoodShare service architecture</title>
+          <desc id="architecture-description">The React frontend sends requests to the API Gateway. The gateway registers with and discovers services through Eureka, then routes requests to the auth, food, user, request, payment, and password reset services.</desc>
+          <defs>
+            <marker id="arrow-blue" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#1e5aa8" /></marker>
+            <marker id="arrow-green" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#087f5b" /></marker>
+            <marker id="arrow-violet" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#6c55bd" /></marker>
+          </defs>
+
+          <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M220 380 H270" stroke="#1e5aa8" stroke-width="3" marker-end="url(#arrow-blue)" />
+            <path d="M360 290 C360 245 360 220 360 185" stroke="#6c55bd" stroke-width="2.5" marker-end="url(#arrow-violet)" />
+            <path d="M385 185 C405 225 405 250 385 290" stroke="#6c55bd" stroke-width="2.5" marker-end="url(#arrow-violet)" />
+            <path d="M450 380 H550" stroke="#087f5b" stroke-width="3" />
+            <path d="M550 200 V650" stroke="#087f5b" stroke-width="3" />
+            <path d="M550 200 H600" stroke="#087f5b" stroke-width="3" marker-end="url(#arrow-green)" />
+            <path d="M550 290 H600" stroke="#087f5b" stroke-width="3" marker-end="url(#arrow-green)" />
+            <path d="M550 380 H600" stroke="#087f5b" stroke-width="3" marker-end="url(#arrow-green)" />
+            <path d="M550 470 H600" stroke="#087f5b" stroke-width="3" marker-end="url(#arrow-green)" />
+            <path d="M550 560 H600" stroke="#087f5b" stroke-width="3" marker-end="url(#arrow-green)" />
+            <path d="M550 650 H600" stroke="#087f5b" stroke-width="3" marker-end="url(#arrow-green)" />
+          </g>
+
+          <g font-family="Arial, sans-serif" text-anchor="middle">
+            <rect x="30" y="335" width="190" height="90" rx="12" fill="#eaf2ff" stroke="#1e5aa8" stroke-width="2" />
+            <text x="125" y="368" font-size="18" font-weight="700" fill="#102a43">Frontend</text>
+            <text x="125" y="391" font-size="14" fill="#52677d">React + Vite</text>
+            <text x="125" y="412" font-size="14" font-weight="700" fill="#1e5aa8">Port 5173</text>
+
+            <rect x="270" y="290" width="180" height="180" rx="12" fill="#eafaf4" stroke="#087f5b" stroke-width="2" />
+            <text x="360" y="363" font-size="18" font-weight="700" fill="#102a43">API Gateway</text>
+            <text x="360" y="386" font-size="14" fill="#52677d">Spring Boot</text>
+            <text x="360" y="407" font-size="14" font-weight="700" fill="#087f5b">Port 8079</text>
+
+            <rect x="275" y="90" width="170" height="95" rx="12" fill="#f2eeff" stroke="#6c55bd" stroke-width="2" />
+            <text x="360" y="128" font-size="18" font-weight="700" fill="#102a43">Eureka</text>
+            <text x="360" y="151" font-size="14" fill="#52677d">Service Registry</text>
+            <text x="360" y="171" font-size="14" font-weight="700" fill="#6c55bd">Port 8761</text>
+
+            <text x="485" y="362" font-size="12" fill="#1e5aa8">API requests</text>
+            <text x="360" y="225" font-size="12" fill="#6c55bd">register / discover</text>
+            <text x="750" y="710" font-size="12" fill="#087f5b">Gateway routes requests to registered services</text>
+
+            <rect x="600" y="170" width="300" height="60" rx="10" fill="#fff5e6" stroke="#b26a00" stroke-width="2" />
+            <text x="750" y="196" font-size="16" font-weight="700" fill="#102a43">Auth Service</text>
+            <text x="750" y="216" font-size="13" fill="#52677d">Login / JWT · 8084</text>
+
+            <rect x="600" y="260" width="300" height="60" rx="10" fill="#ebfff5" stroke="#1e7a5d" stroke-width="2" />
+            <text x="750" y="286" font-size="16" font-weight="700" fill="#102a43">Food Service</text>
+            <text x="750" y="306" font-size="13" fill="#52677d">Listings · 8083</text>
+
+            <rect x="600" y="350" width="300" height="60" rx="10" fill="#fff0f5" stroke="#a52f5c" stroke-width="2" />
+            <text x="750" y="376" font-size="16" font-weight="700" fill="#102a43">User Service</text>
+            <text x="750" y="396" font-size="13" fill="#52677d">Profiles · 8082</text>
+
+            <rect x="600" y="440" width="300" height="60" rx="10" fill="#edfaff" stroke="#206a9f" stroke-width="2" />
+            <text x="750" y="466" font-size="16" font-weight="700" fill="#102a43">Request Service</text>
+            <text x="750" y="486" font-size="13" fill="#52677d">Fulfillment · varies</text>
+
+            <rect x="600" y="530" width="300" height="60" rx="10" fill="#fff8e6" stroke="#ad6e00" stroke-width="2" />
+            <text x="750" y="556" font-size="16" font-weight="700" fill="#102a43">Payment Service</text>
+            <text x="750" y="576" font-size="13" fill="#52677d">Transactions · varies</text>
+
+            <rect x="600" y="620" width="300" height="60" rx="10" fill="#f3f6fa" stroke="#5c6b7d" stroke-width="2" />
+            <text x="750" y="646" font-size="16" font-weight="700" fill="#102a43">Password Reset</text>
+            <text x="750" y="666" font-size="13" fill="#52677d">Recovery · varies</text>
+          </g>
+        </svg>
+      </div>
+      <p style="text-align:center; color:var(--muted); font-size:13px;">Frontend requests enter through the API Gateway. Eureka provides service discovery, and the gateway routes each request to the appropriate backend service.</p>
+    </section>
+
+    <section class="card">
+      <h2>4. Frontend Module Details</h2>
+      <p>The frontend is a React application built using Vite. It contains role-based pages for donor, NGO, volunteer, admin and public browsing. The page registry includes:</p>
+      <table>
+        <thead>
+          <tr><th>Page</th><th>Route</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Home</td><td><code>/</code></td></tr>
+          <tr><td>Login</td><td><code>/login</code></td></tr>
+          <tr><td>Signup</td><td><code>/signup</code></td></tr>
+          <tr><td>About</td><td><code>/about</code></td></tr>
+          <tr><td>Contact</td><td><code>/contact</code></td></tr>
+          <tr><td>Blog</td><td><code>/blog</code></td></tr>
+          <tr><td>Donor Dashboard</td><td><code>/donor-dashboard</code></td></tr>
+          <tr><td>NGO Dashboard</td><td><code>/ngo-dashboard</code></td></tr>
+          <tr><td>Volunteer Dashboard</td><td><code>/volunteer-dashboard</code></td></tr>
+          <tr><td>Admin Dashboard</td><td><code>/admin-dashboard</code></td></tr>
+          <tr><td>API Demo</td><td><code>/api-demo</code></td></tr>
+        </tbody>
+      </table>
+      <p><strong>Frontend stack:</strong> React 19, Vite 8, Node.js 20.19+ required. The project uses a central API base URL via environment variable <code>VITE_API_BASE_URL</code>.</p>
+    </section>
+
+    <section class="card">
+      <h2>4. Backend Service Overview</h2>
+      <table>
+        <thead>
+          <tr><th>Service</th><th>Role</th><th>Port</th><th>Database</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>service-registry</strong></td><td>Eureka service discovery</td><td>8761</td><td>—</td></tr>
+          <tr><td><strong>api-gateway</strong></td><td>Central routing layer</td><td>8079</td><td>—</td></tr>
+          <tr><td><strong>auth-service</strong></td><td>Register/login + JWT</td><td>8084</td><td><code>foodshare_auth_db</code></td></tr>
+          <tr><td><strong>food-service</strong></td><td>Food listing management</td><td>8083</td><td><code>foodshare_food_db</code></td></tr>
+          <tr><td><strong>user-service</strong></td><td>User profile service</td><td>8082</td><td><code>foodshare_user_db</code></td></tr>
+          <tr><td><strong>request-service</strong></td><td>Requests/fulfillment</td><td>Varies</td><td>Separate DB</td></tr>
+          <tr><td><strong>payment_service</strong></td><td>Payments</td><td>Varies</td><td>Separate DB</td></tr>
+        </tbody>
+      </table>
+      <p>The frontend sends API calls to the gateway; the gateway then routes traffic to individual services. The backend design separates user identity, food listing, and transaction logic into distinct modules.</p>
+    </section>
+
+    <section class="card">
+      <h2>5. Frontend Run Process</h2>
+      <ol>
+        <li>Go to project root.</li>
+        <li>Install dependencies: <code>npm install</code>.</li>
+        <li>Run the project: <code>npm run dev</code>.</li>
+        <li>Open the local port shown in the terminal browser window.</li>
+        <li>For production check: <code>npm run build</code>, <code>npm run check</code>, and <code>npm run preview</code>.</li>
+      </ol>
+      <pre># Frontend commands
+npm install
+npm run dev
+npm run build
+npm run check
+npm run preview
+
+# optional custom API base
+VITE_API_BASE_URL=http://localhost:8079/api npm run dev</pre>
+    </section>
+
+    <section class="card">
+      <h2>6. Backend Run Process</h2>
+      <ol>
+        <li>Create all required MySQL databases: <code>foodshare_auth_db</code>, <code>foodshare_food_db</code>, <code>foodshare_user_db</code>.</li>
+        <li>Update datasource credentials inside each service's configuration file.</li>
+        <li>Start the services in order: service registry → API gateway → auth service → food service → user service → request/payment services.</li>
+        <li>Verify discovery and health from <code>http://localhost:8761/</code>.</li>
+        <li>Call endpoints using the gateway URL <code>http://localhost:8079/api</code>.</li>
+      </ol>
+      <pre># Example backend startup
+cd Backend/service-registry
+./mvnw spring-boot:run
+
+cd ../api-gateway
+./mvnw spring-boot:run
+
+cd ../auth-service
+./mvnw spring-boot:run</pre>
+      <p><strong>Important:</strong> Some shell scripts or logs may refer to outdated ports or services; the real implementation should be validated against the current project code and configuration files.</p>
+    </section>
+
+    <section class="card">
+      <h2>7. API Flow Summary</h2>
+      <h3>Authentication flow</h3>
+      <ol>
+        <li>Client sends request to <code>/api/auth/register</code> or <code>/api/auth/login</code>.</li>
+        <li>API gateway routes request to the auth service.</li>
+        <li>Service validates data, hashes password, issues JWT if valid.</li>
+        <li>JWT is used in Authorization header for protected API calls.</li>
+      </ol>
+      <h3>Food flow</h3>
+      <ol>
+        <li>Donor creates a food listing through frontend.</li>
+        <li>Request goes to <code>/api/foods</code>.</li>
+        <li>Food service processes quantity, expiry, address, and listing metadata.</li>
+        <li>NGO or volunteer sees available food items and can act on them.</li>
+      </ol>
+      <h3>User flow</h3>
+      <ol>
+        <li>User pages collect identity and profile data.</li>
+        <li>Profile and role-based behavior are handled through service-level logic.</li>
+        <li>Multiple role pages share the same core application flow.</li>
+      </ol>
+    </section>
+
+    <section class="card">
+      <h2>8. Auth Service API Overview</h2>
+      <table>
+        <thead>
+          <tr><th>Method</th><th>Endpoint</th><th>Purpose</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><span class="method post">POST</span></td><td><code>/api/auth/register</code></td><td>Create new auth user and return a JWT token.</td></tr>
+          <tr><td><span class="method post">POST</span></td><td><code>/api/auth/login</code></td><td>Login and verify user credentials.</td></tr>
+        </tbody>
+      </table>
+      <p><strong>Typical request:</strong></p>
+      <pre>{
+  "fullName": "Mayur Vaja",
+  "email": "mayur@example.com",
+  "password": "Secret@123",
+  "role": "DONOR"
+}</pre>
+      <p><strong>Roles:</strong> <code>ADMIN</code>, <code>DONOR</code>, <code>NGO</code>, <code>VOLUNTEER</code>.</p>
+    </section>
+
+    <section class="card">
+      <h2>9. Food Service API Overview</h2>
+      <table>
+        <thead>
+          <tr><th>Method</th><th>Endpoint</th><th>Purpose</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><span class="method post">POST</span></td><td><code>/api/foods</code></td><td>Create a new food listing.</td></tr>
+          <tr><td><span class="method get">GET</span></td><td><code>/api/foods</code></td><td>Get all foods.</td></tr>
+          <tr><td><span class="method get">GET</span></td><td><code>/api/foods/{id}</code></td><td>Fetch one food item by id.</td></tr>
+          <tr><td><span class="method get">GET</span></td><td><code>/api/foods/available</code></td><td>Get only available food listings.</td></tr>
+          <tr><td><span class="method put">PUT</span></td><td><code>/api/foods/{id}</code></td><td>Update an existing food listing.</td></tr>
+          <tr><td><span class="method delete">DELETE</span></td><td><code>/api/foods/{id}</code></td><td>Delete a food listing.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>10. User Service API Overview</h2>
+      <table>
+        <thead>
+          <tr><th>Method</th><th>Endpoint</th><th>Purpose</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><span class="method post">POST</span></td><td><code>/api/users/register</code></td><td>Create a user profile.</td></tr>
+          <tr><td><span class="method post">POST</span></td><td><code>/api/users/login</code></td><td>Validate user login.</td></tr>
+          <tr><td><span class="method get">GET</span></td><td><code>/api/users</code></td><td>List all users.</td></tr>
+          <tr><td><span class="method get">GET</span></td><td><code>/api/users/{id}</code></td><td>Fetch a single user.</td></tr>
+          <tr><td><span class="method put">PUT</span></td><td><code>/api/users/{id}</code></td><td>Update profile or password.</td></tr>
+          <tr><td><span class="method delete">DELETE</span></td><td><code>/api/users/{id}</code></td><td>Delete a user record.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>11. Project Process Report</h2>
+      <table>
+        <thead>
+          <tr><th>Phase</th><th>Action</th><th>Result</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1. Requirement study</td><td>Mapped donor, NGO, volunteer, and admin flows.</td><td>Clear business scope and role-based pages were defined.</td></tr>
+          <tr><td>2. Frontend build</td><td>Created React pages and route registry for the full application.</td><td>User-facing screens are available for all workflows.</td></tr>
+          <tr><td>3. Backend design</td><td>Split logic into discovery, gateway, auth, food, user, payment, and request services.</td><td>Microservice architecture supports modularity and clear responsibility boundaries.</td></tr>
+          <tr><td>4. API integration</td><td>Configured frontend to call backend gateways.</td><td>UI can interact with real service endpoints.</td></tr>
+          <tr><td>5. Database setup</td><td>Assigned domain-specific MySQL databases.</td><td>Authentication, food, and user data are logically separated.</td></tr>
+          <tr><td>6. Validation</td><td>Checked dependencies, build scripts, and local startup flow.</td><td>Project is ready for local execution and deployment verification.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>12. Current Risks and Improvement Areas</h2>
+      <div class="risk">
+        <ul>
+          <li><strong>Duplicate user data:</strong> Both auth-service and user-service manage user information independently.</li>
+          <li><strong>Security risk:</strong> Some service logic may not enforce strong password hashing or JWT authorization consistently.</li>
+          <li><strong>Service route inconsistency:</strong> Some services are accessible directly while others go through the gateway.</li>
+          <li><strong>Outdated startup scripts:</strong> Scripts should be validated against the real current backend modules.</li>
+          <li><strong>Environment dependency:</strong> MySQL and Java runtime configuration must be correctly set before runtime testing.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>13. Final Execution Recommendation</h2>
+      <p>For a successful local project run, follow this sequence: prepare databases, start Eureka, start the API gateway, then start auth and food services, then the remaining business services, and finally run the frontend application. Validate the UI, API health, and route flow before moving to production deployment.</p>
+      <p><strong>Current recommended flow:</strong> 1) frontend dependency setup, 2) database creation, 3) registry startup, 4) gateway startup, 5) auth + food services, 6) user/request/payment services, 7) frontend launch, 8) functional testing.</p>
+    </section>
+  </main>
+</body>
+</html>

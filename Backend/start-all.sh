@@ -48,6 +48,7 @@ start_service() {
     food-service) port=8083 ;;
     request-service) port=8085 ;;
     payment_service) port=8086 ;;
+    notification-service) port=8087 ;;
   esac
 
   if lsof -ti tcp:"$port" >/dev/null 2>&1; then
@@ -66,6 +67,7 @@ start_service "user-service"
 start_service "food-service"
 start_service "request-service"
 start_service "payment_service"
+start_service "notification-service"
 
 echo "All services are starting..."
 echo "Eureka       : http://localhost:8761"
@@ -75,3 +77,4 @@ echo "User Service : http://localhost:8082"
 echo "Food Service : http://localhost:8083"
 echo "Request      : http://localhost:8085"
 echo "Payment      : http://localhost:8086"
+echo "Notification : http://localhost:8087"
