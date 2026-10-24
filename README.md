@@ -31,9 +31,9 @@ The React app calls the Spring Boot API gateway at `http://localhost:8079/api` b
 VITE_API_BASE_URL=https://api.example.com/api npm run dev
 ```
 
-Start the backend services in this order: service registry, API gateway, auth service, food service, request service, payment service, and user service. The gateway routes `/api/auth`, `/api/foods`, `/api/requests`, `/api/payments`, and `/api/users` to those services. Auth registration and login now submit to the backend; the backend persists account data in its configured MySQL database (`foodshare_auth_db`). Food, request, and payment API helpers are available for dashboard flows and persist through their corresponding service databases.
+Start the backend services in this order: service registry, API gateway, auth service, food service, request service, payment service, user service, and notification service. The gateway routes `/api/auth`, `/api/foods`, `/api/requests`, `/api/payments`, `/api/users`, and `/api/notifications` to those services. Auth registration and login now submit to the backend; the backend persists account data in its configured MySQL database (`foodshare_auth_db`). Food, request, payment, and notification API helpers are available for dashboard flows and persist through their corresponding service databases. `notificationApi.create({ recipient, channel, eventType, message })` sends a notification, and `notificationApi.getAll()` retrieves notification records. Supported channels are `EMAIL`, `SMS`, and `PUSH`.
 
-The MySQL databases must exist and the credentials in each backend service's `application.properties` must be configured before submitting data. Do not use the default empty database password outside local development.
+MySQL must be running and the databases must exist before submitting data. All MySQL-backed services accept the same `DB_USERNAME` and `DB_PASSWORD` environment variables. Export them in the terminal before starting the backend services; for example, set `DB_USERNAME` to your MySQL account and `DB_PASSWORD` to that account's password. These values are not stored in the repository. Do not use an empty database password outside local development.
 
 ### Notes
 - All original HTML pages are represented as React-rendered page content.

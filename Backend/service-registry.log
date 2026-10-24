@@ -1,0 +1,234 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] -------------------< com.foodshare:service-registry >-------------------
+[INFO] Building  0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] >>> spring-boot:4.1.0:run (default-cli) > test-compile @ service-registry >>>
+[INFO] 
+[INFO] --- resources:3.5.0:resources (default-resources) @ service-registry ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] Copying 0 resource from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.15.0:compile (default-compile) @ service-registry ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.5.0:testResources (default-testResources) @ service-registry ---
+[INFO] skip non existing resourceDirectory /Users/ravipandit/Development/MCA/Spring-Boot-Project/FoodShare_Fronted /Backend/service-registry/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ service-registry ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] <<< spring-boot:4.1.0:run (default-cli) < test-compile @ service-registry <<<
+[INFO] 
+[INFO] 
+[INFO] --- spring-boot:4.1.0:run (default-cli) @ service-registry ---
+[INFO] Attaching agents: []
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.0)
+
+2026-10-21T19:52:26.015+05:30  INFO 15534 --- [service-registry] [           main] c.f.s.ServiceRegistryApplication         : Starting ServiceRegistryApplication using Java 21.0.12 with PID 15534 (/Users/ravipandit/Development/MCA/Spring-Boot-Project/FoodShare_Fronted /Backend/service-registry/target/classes started by ravipandit in /Users/ravipandit/Development/MCA/Spring-Boot-Project/FoodShare_Fronted /Backend/service-registry)
+2026-10-21T19:52:26.017+05:30  INFO 15534 --- [service-registry] [           main] c.f.s.ServiceRegistryApplication         : No active profile set, falling back to 1 default profile: "default"
+2026-10-21T19:52:26.510+05:30  INFO 15534 --- [service-registry] [           main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=29ae514e-1145-386b-a836-d233a57a7f44
+2026-10-21T19:52:26.662+05:30  INFO 15534 --- [service-registry] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8761 (http)
+2026-10-21T19:52:26.672+05:30  INFO 15534 --- [service-registry] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-10-21T19:52:26.672+05:30  INFO 15534 --- [service-registry] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.22]
+2026-10-21T19:52:26.706+05:30  INFO 15534 --- [service-registry] [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 667 ms
+2026-10-21T19:52:27.131+05:30  INFO 15534 --- [service-registry] [           main] c.n.d.provider.DiscoveryJerseyProvider   : Using JSON encoding codec LegacyJacksonJson
+2026-10-21T19:52:27.131+05:30  INFO 15534 --- [service-registry] [           main] c.n.d.provider.DiscoveryJerseyProvider   : Using JSON decoding codec LegacyJacksonJson
+2026-10-21T19:52:27.223+05:30  INFO 15534 --- [service-registry] [           main] c.n.d.provider.DiscoveryJerseyProvider   : Using XML encoding codec XStreamXml
+2026-10-21T19:52:27.224+05:30  INFO 15534 --- [service-registry] [           main] c.n.d.provider.DiscoveryJerseyProvider   : Using XML decoding codec XStreamXml
+2026-10-21T19:52:27.298+05:30  INFO 15534 --- [service-registry] [           main] o.s.v.b.OptionalValidatorFactoryBean     : Failed to set up a Bean Validation provider: jakarta.validation.NoProviderFoundException: Unable to create a Configuration, because no Jakarta Validation provider could be found. Add a provider like Hibernate Validator (RI) to your classpath.
+2026-10-21T19:52:27.592+05:30  WARN 15534 --- [service-registry] [           main] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2026-10-21T19:52:27.602+05:30  INFO 15534 --- [service-registry] [           main] o.s.c.n.eureka.InstanceInfoFactory       : Setting initial instance status as: STARTING
+2026-10-21T19:52:27.611+05:30  INFO 15534 --- [service-registry] [           main] com.netflix.discovery.DiscoveryClient    : Initializing Eureka in region us-east-1
+2026-10-21T19:52:27.611+05:30  INFO 15534 --- [service-registry] [           main] com.netflix.discovery.DiscoveryClient    : Client configured to neither register nor query for data.
+2026-10-21T19:52:27.612+05:30  INFO 15534 --- [service-registry] [           main] com.netflix.discovery.DiscoveryClient    : Discovery Client initialized at timestamp 1792592547611 with initial instances count: 0
+2026-10-21T19:52:27.630+05:30  INFO 15534 --- [service-registry] [           main] c.n.eureka.DefaultEurekaServerContext    : Initializing ...
+2026-10-21T19:52:27.630+05:30  WARN 15534 --- [service-registry] [           main] c.n.eureka.cluster.PeerEurekaNodes       : The replica size seems to be empty. Check the route 53 DNS Registry
+2026-10-21T19:52:27.636+05:30  INFO 15534 --- [service-registry] [           main] c.n.e.registry.AbstractInstanceRegistry  : Finished initializing remote region registries. All known remote regions: []
+2026-10-21T19:52:27.636+05:30  INFO 15534 --- [service-registry] [           main] c.n.eureka.DefaultEurekaServerContext    : Initialized
+2026-10-21T19:52:27.640+05:30  INFO 15534 --- [service-registry] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2026-10-21T19:52:27.664+05:30  INFO 15534 --- [service-registry] [           main] o.s.c.n.e.s.EurekaServiceRegistry        : Registering application SERVICE-REGISTRY with eureka with status UP
+2026-10-21T19:52:27.669+05:30  INFO 15534 --- [service-registry] [       Thread-9] o.s.c.n.e.server.EurekaServerBootstrap   : isAws returned false
+2026-10-21T19:52:27.669+05:30  INFO 15534 --- [service-registry] [       Thread-9] o.s.c.n.e.server.EurekaServerBootstrap   : Initialized server context
+2026-10-21T19:52:27.669+05:30  INFO 15534 --- [service-registry] [       Thread-9] c.n.e.r.PeerAwareInstanceRegistryImpl    : Got 1 instances from neighboring DS node
+2026-10-21T19:52:27.669+05:30  INFO 15534 --- [service-registry] [       Thread-9] c.n.e.r.PeerAwareInstanceRegistryImpl    : Renew threshold is: 1
+2026-10-21T19:52:27.669+05:30  INFO 15534 --- [service-registry] [       Thread-9] c.n.e.r.PeerAwareInstanceRegistryImpl    : Changing status to UP
+2026-10-21T19:52:27.670+05:30  INFO 15534 --- [service-registry] [       Thread-9] e.s.EurekaServerInitializerConfiguration : Started Eureka Server
+2026-10-21T19:52:27.681+05:30  INFO 15534 --- [service-registry] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8761 (http) with context path '/'
+2026-10-21T19:52:27.681+05:30  INFO 15534 --- [service-registry] [           main] .s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 8761
+2026-10-21T19:52:27.690+05:30  INFO 15534 --- [service-registry] [           main] c.f.s.ServiceRegistryApplication         : Started ServiceRegistryApplication in 1.876 seconds (process running for 2.161)
+2026-10-21T19:52:48.561+05:30  INFO 15534 --- [service-registry] [nio-8761-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-10-21T19:52:48.569+05:30  INFO 15534 --- [service-registry] [nio-8761-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-10-21T19:52:48.598+05:30  INFO 15534 --- [service-registry] [nio-8761-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 28 ms
+2026-10-21T19:52:49.179+05:30  INFO 15534 --- [service-registry] [nio-8761-exec-2] c.n.e.registry.AbstractInstanceRegistry  : Registered instance API-GATEWAY/10.58.147.144:api-gateway:8079 with status UP (replication=false)
+2026-10-21T19:52:50.554+05:30  INFO 15534 --- [service-registry] [nio-8761-exec-4] c.n.e.registry.AbstractInstanceRegistry  : Registered instance PAYMENT-SERVICE/10.58.147.144:payment-service:8086 with status UP (replication=false)
+2026-10-21T19:52:51.349+05:30  INFO 15534 --- [service-registry] [nio-8761-exec-6] c.n.e.registry.AbstractInstanceRegistry  : Registered instance REQUEST-SERVICE/10.58.147.144:request-service:8085 with status UP (replication=false)
+2026-10-21T19:52:51.827+05:30  INFO 15534 --- [service-registry] [io-8761-exec-10] c.n.e.registry.AbstractInstanceRegistry  : Registered instance USER-SERVICE/10.58.147.144:user-service:8082 with status UP (replication=false)
+2026-10-21T19:52:51.871+05:30  INFO 15534 --- [service-registry] [nio-8761-exec-1] c.n.e.registry.AbstractInstanceRegistry  : Registered instance AUTH-SERVICE/10.58.147.144:auth-service:8084 with status UP (replication=false)
+2026-10-21T19:52:51.875+05:30  INFO 15534 --- [service-registry] [nio-8761-exec-2] c.n.e.registry.AbstractInstanceRegistry  : Registered instance FOOD-SERVICE/10.58.147.144:food-service:8083 with status UP (replication=false)
+2026-10-21T19:52:52.562+05:30  INFO 15534 --- [service-registry] [nio-8761-exec-4] c.n.e.registry.AbstractInstanceRegistry  : Registered instance NOTIFICATION-SERVICE/10.58.147.144:notification-service:8087 with status UP (replication=false)
+2026-10-21T19:53:27.674+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 0ms
+2026-10-21T19:54:27.676+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 4ms
+2026-10-21T19:55:27.680+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 5ms
+2026-10-21T19:56:27.684+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 5ms
+2026-10-21T19:57:27.684+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 2ms
+2026-10-21T19:58:27.688+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 4ms
+2026-10-21T19:59:27.691+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 4ms
+2026-10-21T20:00:27.695+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 5ms
+2026-10-21T20:01:27.706+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 5ms
+2026-10-21T20:02:27.630+05:30  WARN 15534 --- [service-registry] [eerNodesUpdater] c.n.eureka.cluster.PeerEurekaNodes       : The replica size seems to be empty. Check the route 53 DNS Registry
+2026-10-21T20:02:27.712+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 4ms
+2026-10-21T20:03:27.716+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 4ms
+2026-10-21T20:04:27.719+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 4ms
+2026-10-21T20:05:27.722+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 4ms
+2026-10-21T20:06:27.725+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 4ms
+2026-10-21T20:07:27.638+05:30  INFO 15534 --- [service-registry] [hresholdUpdater] c.n.e.r.PeerAwareInstanceRegistryImpl    : Current renewal threshold is : 13
+2026-10-21T20:07:27.729+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 5ms
+2026-10-21T20:08:27.730+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 1ms
+2026-10-21T20:09:27.730+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 1ms
+2026-10-21T20:10:27.734+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 5ms
+2026-10-21T20:11:27.735+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 2ms
+2026-10-21T20:12:27.619+05:30  WARN 15534 --- [service-registry] [eerNodesUpdater] c.n.eureka.cluster.PeerEurekaNodes       : The replica size seems to be empty. Check the route 53 DNS Registry
+2026-10-21T20:12:27.738+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 4ms
+2026-10-21T20:13:27.741+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 4ms
+2026-10-21T20:14:27.742+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 2ms
+2026-10-21T20:15:27.746+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 5ms
+2026-10-21T20:16:20.088+05:30  INFO 15534 --- [service-registry] [nio-8761-exec-2] c.n.e.registry.AbstractInstanceRegistry  : Registered instance REQUEST-SERVICE/10.58.147.144:request-service:8085 with status UP (replication=false)
+2026-10-21T20:16:20.544+05:30  INFO 15534 --- [service-registry] [nio-8761-exec-3] c.n.e.registry.AbstractInstanceRegistry  : Registered instance REQUEST-SERVICE/10.58.147.144:request-service:8085 with status DOWN (replication=false)
+2026-10-21T20:16:23.580+05:30  INFO 15534 --- [service-registry] [nio-8761-exec-6] c.n.e.registry.AbstractInstanceRegistry  : Cancelled instance REQUEST-SERVICE/10.58.147.144:request-service:8085 (replication=false)
+2026-10-21T20:16:27.746+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 1ms
+2026-10-21T20:16:51.998+05:30  WARN 15534 --- [service-registry] [nio-8761-exec-4] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: REQUEST-SERVICE - 10.58.147.144:request-service:8085
+2026-10-21T20:16:52.000+05:30  WARN 15534 --- [service-registry] [nio-8761-exec-4] c.n.eureka.resources.InstanceResource    : Not Found (Renew): REQUEST-SERVICE - 10.58.147.144:request-service:8085
+2026-10-21T20:16:52.059+05:30  INFO 15534 --- [service-registry] [nio-8761-exec-1] c.n.e.registry.AbstractInstanceRegistry  : Registered instance REQUEST-SERVICE/10.58.147.144:request-service:8085 with status UP (replication=false)
+2026-10-21T20:17:27.753+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 4ms
+2026-10-21T20:18:27.758+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 5ms
+2026-10-21T20:19:27.761+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 4ms
+2026-10-21T20:20:27.764+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 5ms
+2026-10-21T20:21:27.764+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 1ms
+2026-10-21T20:22:27.619+05:30  WARN 15534 --- [service-registry] [eerNodesUpdater] c.n.eureka.cluster.PeerEurekaNodes       : The replica size seems to be empty. Check the route 53 DNS Registry
+2026-10-21T20:22:27.639+05:30  INFO 15534 --- [service-registry] [hresholdUpdater] c.n.e.r.PeerAwareInstanceRegistryImpl    : Current renewal threshold is : 13
+2026-10-21T20:22:27.766+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 2ms
+2026-10-21T20:23:27.768+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 2ms
+2026-10-21T20:24:27.770+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 4ms
+2026-10-21T20:25:27.774+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 5ms
+2026-10-21T20:26:27.778+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 5ms
+2026-10-21T20:30:52.895+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 2ms
+2026-10-21T20:33:08.938+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 9ms
+2026-10-21T20:34:08.943+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 5ms
+2026-10-21T20:34:35.606+05:30  INFO 15534 --- [service-registry] [nio-8761-exec-1] c.n.e.registry.AbstractInstanceRegistry  : Registered instance REQUEST-SERVICE/10.58.147.144:request-service:8085 with status UP (replication=false)
+2026-10-21T20:34:35.934+05:30  INFO 15534 --- [service-registry] [nio-8761-exec-5] c.n.e.registry.AbstractInstanceRegistry  : Registered instance REQUEST-SERVICE/10.58.147.144:request-service:8085 with status DOWN (replication=false)
+2026-10-21T20:34:38.952+05:30  INFO 15534 --- [service-registry] [nio-8761-exec-4] c.n.e.registry.AbstractInstanceRegistry  : Cancelled instance REQUEST-SERVICE/10.58.147.144:request-service:8085 (replication=false)
+2026-10-21T20:35:03.670+05:30  WARN 15534 --- [service-registry] [io-8761-exec-10] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: REQUEST-SERVICE - 10.58.147.144:request-service:8085
+2026-10-21T20:35:03.670+05:30  WARN 15534 --- [service-registry] [io-8761-exec-10] c.n.eureka.resources.InstanceResource    : Not Found (Renew): REQUEST-SERVICE - 10.58.147.144:request-service:8085
+2026-10-21T20:35:03.702+05:30  INFO 15534 --- [service-registry] [io-8761-exec-11] c.n.e.registry.AbstractInstanceRegistry  : Registered instance REQUEST-SERVICE/10.58.147.144:request-service:8085 with status UP (replication=false)
+2026-10-21T20:35:08.943+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 2ms
+2026-10-21T20:36:08.944+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 1ms
+2026-10-21T20:37:08.766+05:30  WARN 15534 --- [service-registry] [eerNodesUpdater] c.n.eureka.cluster.PeerEurekaNodes       : The replica size seems to be empty. Check the route 53 DNS Registry
+2026-10-21T20:37:08.949+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 4ms
+2026-10-21T20:38:08.954+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 5ms
+2026-10-21T20:39:08.956+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 4ms
+2026-10-21T20:40:08.960+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 5ms
+2026-10-21T20:41:08.962+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 2ms
+2026-10-21T20:42:08.771+05:30  INFO 15534 --- [service-registry] [hresholdUpdater] c.n.e.r.PeerAwareInstanceRegistryImpl    : Current renewal threshold is : 13
+2026-10-21T20:42:08.961+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 0ms
+2026-10-21T20:43:08.966+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 5ms
+2026-10-21T20:54:00.784+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 4ms
+2026-10-21T20:54:00.793+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Evicting 2 items (expired=6, evictionLimit=2)
+2026-10-21T20:54:00.797+05:30  WARN 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: expired lease for REQUEST-SERVICE/10.58.147.144:request-service:8085
+2026-10-21T20:54:00.802+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Cancelled instance REQUEST-SERVICE/10.58.147.144:request-service:8085 (replication=false)
+2026-10-21T20:54:00.804+05:30  WARN 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: expired lease for AUTH-SERVICE/10.58.147.144:auth-service:8084
+2026-10-21T20:54:00.805+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Cancelled instance AUTH-SERVICE/10.58.147.144:auth-service:8084 (replication=false)
+2026-10-21T21:08:56.483+05:30  WARN 15534 --- [service-registry] [nio-8761-exec-6] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: REQUEST-SERVICE - 10.58.147.144:request-service:8085
+2026-10-21T21:08:56.485+05:30  WARN 15534 --- [service-registry] [nio-8761-exec-6] c.n.eureka.resources.InstanceResource    : Not Found (Renew): REQUEST-SERVICE - 10.58.147.144:request-service:8085
+2026-10-21T21:08:56.541+05:30  INFO 15534 --- [service-registry] [nio-8761-exec-3] c.n.e.registry.AbstractInstanceRegistry  : Registered instance REQUEST-SERVICE/10.58.147.144:request-service:8085 with status UP (replication=false)
+2026-10-21T21:08:57.209+05:30  WARN 15534 --- [service-registry] [io-8761-exec-12] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: AUTH-SERVICE - 10.58.147.144:auth-service:8084
+2026-10-21T21:08:57.209+05:30  WARN 15534 --- [service-registry] [io-8761-exec-12] c.n.eureka.resources.InstanceResource    : Not Found (Renew): AUTH-SERVICE - 10.58.147.144:auth-service:8084
+2026-10-21T21:08:57.307+05:30  INFO 15534 --- [service-registry] [nio-8761-exec-4] c.n.e.registry.AbstractInstanceRegistry  : Registered instance AUTH-SERVICE/10.58.147.144:auth-service:8084 with status UP (replication=false)
+2026-10-21T21:09:31.431+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 1ms
+2026-10-21T21:10:31.435+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 5ms
+2026-10-21T21:11:31.225+05:30  WARN 15534 --- [service-registry] [eerNodesUpdater] c.n.eureka.cluster.PeerEurekaNodes       : The replica size seems to be empty. Check the route 53 DNS Registry
+2026-10-21T21:11:31.439+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 5ms
+2026-10-21T21:12:31.443+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 4ms
+2026-10-21T21:13:31.443+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 1ms
+2026-10-21T21:14:31.445+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 2ms
+2026-10-21T21:15:31.445+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 0ms
+2026-10-21T21:16:31.444+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 0ms
+2026-10-21T21:17:31.445+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 1ms
+2026-10-21T21:18:31.450+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 5ms
+2026-10-21T21:19:31.453+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 4ms
+2026-10-21T21:20:31.456+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 4ms
+2026-10-21T21:21:31.219+05:30  INFO 15534 --- [service-registry] [hresholdUpdater] c.n.e.r.PeerAwareInstanceRegistryImpl    : Current renewal threshold is : 13
+2026-10-21T21:21:31.219+05:30  WARN 15534 --- [service-registry] [eerNodesUpdater] c.n.eureka.cluster.PeerEurekaNodes       : The replica size seems to be empty. Check the route 53 DNS Registry
+2026-10-21T21:21:31.461+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 5ms
+2026-10-21T21:22:31.466+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 5ms
+2026-10-21T21:23:31.470+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 5ms
+2026-10-21T21:24:31.472+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 2ms
+2026-10-21T21:25:31.481+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 4ms
+2026-10-21T21:26:31.483+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 2ms
+2026-10-21T21:27:31.486+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 4ms
+2026-10-21T21:28:31.490+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 4ms
+2026-10-21T21:29:31.492+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 2ms
+2026-10-21T21:30:31.492+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 1ms
+2026-10-21T21:31:28.911+05:30  INFO 15534 --- [service-registry] [io-8761-exec-11] c.n.e.registry.AbstractInstanceRegistry  : Registered instance REQUEST-SERVICE/10.58.147.144:request-service:8085 with status DOWN (replication=false)
+2026-10-21T21:31:31.222+05:30  WARN 15534 --- [service-registry] [eerNodesUpdater] c.n.eureka.cluster.PeerEurekaNodes       : The replica size seems to be empty. Check the route 53 DNS Registry
+2026-10-21T21:31:31.492+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 0ms
+2026-10-21T21:31:31.943+05:30  INFO 15534 --- [service-registry] [nio-8761-exec-7] c.n.e.registry.AbstractInstanceRegistry  : Cancelled instance REQUEST-SERVICE/10.58.147.144:request-service:8085 (replication=false)
+2026-10-21T21:32:31.491+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 0ms
+2026-10-21T21:33:31.492+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 1ms
+2026-10-21T21:34:31.493+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 2ms
+2026-10-21T21:35:31.496+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 3ms
+2026-10-21T21:36:31.223+05:30  INFO 15534 --- [service-registry] [hresholdUpdater] c.n.e.r.PeerAwareInstanceRegistryImpl    : Current renewal threshold is : 11
+2026-10-21T21:36:31.500+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 4ms
+2026-10-21T21:37:31.501+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 2ms
+2026-10-21T21:38:31.503+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 2ms
+2026-10-21T21:39:31.502+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 0ms
+2026-10-21T21:40:31.506+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 5ms
+2026-10-21T21:41:31.224+05:30  WARN 15534 --- [service-registry] [eerNodesUpdater] c.n.eureka.cluster.PeerEurekaNodes       : The replica size seems to be empty. Check the route 53 DNS Registry
+2026-10-21T21:41:31.515+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 5ms
+2026-10-21T21:42:31.518+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 2ms
+2026-10-21T21:43:31.518+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 0ms
+2026-10-21T21:44:31.517+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 0ms
+2026-10-21T21:45:31.517+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 0ms
+2026-10-21T21:46:31.522+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 5ms
+2026-10-21T21:47:31.526+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 4ms
+2026-10-21T21:48:31.530+05:30  INFO 15534 --- [service-registry] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 4ms
+2026-10-21T21:48:54.905+05:30  INFO 15534 --- [service-registry] [nio-8761-exec-4] c.n.e.registry.AbstractInstanceRegistry  : Registered instance API-GATEWAY/10.58.147.144:api-gateway:8079 with status DOWN (replication=false)
+2026-10-21T21:48:54.927+05:30  INFO 15534 --- [service-registry] [nio-8761-exec-9] c.n.e.registry.AbstractInstanceRegistry  : Registered instance AUTH-SERVICE/10.58.147.144:auth-service:8084 with status DOWN (replication=false)
+2026-10-21T21:48:54.961+05:30  INFO 15534 --- [service-registry] [io-8761-exec-10] c.n.e.registry.AbstractInstanceRegistry  : Registered instance USER-SERVICE/10.58.147.144:user-service:8082 with status DOWN (replication=false)
+2026-10-21T21:48:55.011+05:30  INFO 15534 --- [service-registry] [nio-8761-exec-8] c.n.e.registry.AbstractInstanceRegistry  : Registered instance FOOD-SERVICE/10.58.147.144:food-service:8083 with status DOWN (replication=false)
+2026-10-21T21:48:55.048+05:30  INFO 15534 --- [service-registry] [io-8761-exec-12] c.n.e.registry.AbstractInstanceRegistry  : Registered instance PAYMENT-SERVICE/10.58.147.144:payment-service:8086 with status DOWN (replication=false)
+2026-10-21T21:48:55.115+05:30  INFO 15534 --- [service-registry] [nio-8761-exec-6] c.n.e.registry.AbstractInstanceRegistry  : Registered instance NOTIFICATION-SERVICE/10.58.147.144:notification-service:8087 with status DOWN (replication=false)
+2026-10-21T21:48:55.125+05:30  INFO 15534 --- [service-registry] [ionShutdownHook] o.s.c.n.e.s.EurekaServiceRegistry        : Unregistering application SERVICE-REGISTRY with eureka with status DOWN
+2026-10-21T21:48:55.147+05:30  INFO 15534 --- [service-registry] [ionShutdownHook] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-10-21T21:48:55.186+05:30  INFO 15534 --- [service-registry] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-10-21T21:48:55.191+05:30  INFO 15534 --- [service-registry] [ionShutdownHook] o.s.c.n.e.server.EurekaServerBootstrap   : Shutting down Eureka Server..
+2026-10-21T21:48:55.191+05:30  INFO 15534 --- [service-registry] [ionShutdownHook] c.n.eureka.DefaultEurekaServerContext    : Shutting down ...
+2026-10-21T21:48:55.192+05:30  INFO 15534 --- [service-registry] [ionShutdownHook] c.n.eureka.DefaultEurekaServerContext    : Shut down
+2026-10-21T21:48:55.192+05:30  INFO 15534 --- [service-registry] [ionShutdownHook] o.s.c.n.e.server.EurekaServerBootstrap   : Eureka Service is now shutdown...
+2026-10-21T21:48:55.198+05:30  INFO 15534 --- [service-registry] [ionShutdownHook] c.n.eureka.DefaultEurekaServerContext    : Shutting down ...
+2026-10-21T21:48:55.198+05:30  INFO 15534 --- [service-registry] [ionShutdownHook] c.n.eureka.DefaultEurekaServerContext    : Shut down
+2026-10-21T21:48:55.206+05:30  INFO 15534 --- [service-registry] [ionShutdownHook] com.netflix.discovery.DiscoveryClient    : Shutting down DiscoveryClient ...
+2026-10-21T21:48:55.206+05:30  INFO 15534 --- [service-registry] [ionShutdownHook] com.netflix.discovery.DiscoveryClient    : Completed shut down of DiscoveryClient
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  01:56 h
+[INFO] Finished at: 2026-10-21T21:48:55+05:30
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.springframework.boot:spring-boot-maven-plugin:4.1.0:run (default-cli) on project service-registry: Process terminated with exit code: 143 -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException

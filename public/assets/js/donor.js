@@ -277,7 +277,7 @@ function bindForm() {
     const submitButton = e.target.querySelector('button[type="submit"]');
     if (submitButton) submitButton.disabled = true;
     try {
-      const response = await fetch('http://localhost:8079/api/foods', {
+      const response = await fetch(`${window.foodshareApiBaseUrl}/foods`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -302,9 +302,31 @@ function bindForm() {
       if (submitButton) submitButton.disabled = false;
       return;
     }
+    let emailSent = false;
+    try {
+      if (!currentUser.email) {
+        throw new Error('Your account does not have an email address for the confirmation.');
+      }
+
+      const notification = await window.foodshareNotificationApi.create({
+        recipient: currentUser.email,
+        channel: 'EMAIL',
+        eventType: 'DONATION_CREATED',
+        message: `Your donation "${foodName}" has been created successfully and is now visible to nearby NGOs.`
+      });
+      emailSent = notification.status === 'SENT';
+      if (!emailSent) {
+        throw new Error('The notification service could not send the email.');
+      }
+    } catch (error) {
+      console.error('Donation confirmation email failed:', error);
+      fsToast(`Donation posted, but the confirmation email could not be sent: ${error.message}`, 'error');
+    }
     if (submitButton) submitButton.disabled = false;
 
-    fsToast('Donation posted — nearby NGOs can now see it.', 'success');
+    if (emailSent) {
+      fsToast('Donation posted — confirmation email sent.', 'success');
+    }
     e.target.reset();
     populateSelects();
     setDefaultExpiry();

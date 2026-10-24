@@ -14,15 +14,16 @@ import com.foodshare.auth_service.dto.VerifyOtpRequest;
 import com.foodshare.auth_service.service.AuthService;
 
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/auth")
-@RequiredArgsConstructor
 public class AuthController {
 
     private final AuthService authService;
 
+    public AuthController(AuthService authService) {
+        this.authService = authService;
+    }
 
     // =========================================
     // REGISTER

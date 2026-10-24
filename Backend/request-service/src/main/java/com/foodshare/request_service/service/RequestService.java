@@ -95,7 +95,7 @@ public class RequestService {
             throw new RuntimeException(
                     "Request not found with id: " + id);
         }
-
+        
         requestRepository.deleteById(id);
     }
 

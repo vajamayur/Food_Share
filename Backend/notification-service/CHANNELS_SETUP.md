@@ -11,7 +11,10 @@ Set environment variables before starting:
 export MAIL_USERNAME="your-address@gmail.com"
 export MAIL_PASSWORD="your-google-app-password"
 ```
-Use a Google App Password; do not commit credentials.
+Use a Google App Password; do not commit credentials. Export both variables in the
+terminal that starts `Backend/start-all.sh` (or the notification service), so the
+service process inherits them. The donor dashboard sends a `DONATION_CREATED`
+email notification after the food service successfully creates a donation.
 
 ### SMS (Twilio)
 Set:

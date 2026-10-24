@@ -177,6 +177,18 @@ export const paymentApi = {
   }
 };
 
+export const notificationApi = {
+  create(notification) {
+    return apiRequest("/notifications", {
+      method: "POST",
+      body: JSON.stringify(notification)
+    });
+  },
+  getAll() {
+    return apiRequest("/notifications");
+  }
+};
+
 export const userApi = {
   register(details) {
     return apiRequest("/users/register", { method: "POST", body: JSON.stringify(details) });

@@ -23,4 +23,27 @@ export MAIL_PASSWORD
 
 
 --- FoodShare App Password
-dvfr znqd vxpo qgwr
+
+# App Passwords must never be stored in this file. Revoke any password
+# that was previously added here and enter a fresh one only at the prompt.
+
+--- Monetary donation
+Payment service માં donationId, userId, amount, Razorpay IDs અને CREATED/SUCCESS status save થાય છે. Flow:
+
+
+POST /api/payments/create-order — order/payment record બનાવે
+POST /api/payments/verify — payment verify કરે
+GET /api/payments/user/{userId} — user ના payments મેળવે
+GET /api/payments/donation/{donationId} — donation સાથે જોડાયેલા payments મેળવે
+
+---WebSocket
+WebSocket no use volunteer ni live delivery location real-time share karva mate thay chhe. Basic implementation already LiveDeliveryTracking.jsx ma chhe; volunteer dashboard tene load kare chhe ane donor/NGO dashboards location joi shake chhe.
+
+Flow aa rite chhe:
+
+Volunteer pehla accepted food request mate delivery claim kare chhe — aa normal REST API request chhe.
+“Start sharing location” dabave tyare browser ws://localhost:8085/ws/deliveries par persistent WebSocket connection khole chhe. Token ane delivery ID mokline backend ne subscribe kare chhe.
+Volunteer location share karva permission aape; browser geolocation updates aave tyare coordinates WebSocket thi backend ne moklay chhe.
+Donor ke NGO viewer dashboard par active delivery select kari subscribe kare chhe. Backend temne delivery sathe sambandhit live location mokle chhe, ane map update thay chhe.
+Volunteer “Stop sharing” kare ke delivery complete thay, tracking bandh thay.
+Backend nu WebSocket endpoint DeliveryWebSocketConfig.java ma /ws/deliveries chhe. Current default URL localhost:8085 chhe; bijaa environment ma VITE_DELIVERY_WS_URL set kari frontend ane backend URL match karva padse.
